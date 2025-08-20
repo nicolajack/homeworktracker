@@ -77,7 +77,7 @@ export default function Assignments() {
     return (
         <div style={{ padding: "2rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
-                <h1>assignments</h1>
+                <h1 id="assignmentsTitle">assignments</h1>
                 <button
                     onClick={() => setShowForm(!showForm)}
                     style={{

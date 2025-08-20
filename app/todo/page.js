@@ -55,14 +55,14 @@ export default function ToDo() {
     }
     return (
         <div id="todopage">
-            <h1 id="title">to-do list</h1>
+            <h1>to-do list</h1>
             <div id="todolist">
                 {tasks.map(task => (
                     <ToDoItem key={task.id} task={task} deleteTask={deleteTask} toggleCompleted={toggleCompleted} />
                 ))}
                 <div id="addtask">
                     <input id="tasktext" type="text" placeholder="buy nico a present" value={text} onChange={e => setText(e.target.value)} />
-                    <button onClick={() => addTask(text)}>add task</button>
+                    <button onClick={() => addTask(text)} id="addbutton">add task</button>
                 </div>
             </div>
 

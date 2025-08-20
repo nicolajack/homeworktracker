@@ -1,5 +1,4 @@
 "use client";
-import styles from "./page.module.css";
 import { useAssignments } from "./context/AssignmentsContext";
 import { useEffect, useState } from "react";
 
@@ -36,7 +35,7 @@ export default function Home() {
       <h1 className="welcome">welcome, bella</h1>
       <h2>you have {incompleteAssignments} assignments to complete</h2>
       <h2 id="lyric">{taylorLyric}</h2>
-      <button onClick={fetchTaylorLyric}>new lyric</button>
+      <button onClick={fetchTaylorLyric} id="addbutton">new lyric</button>
     </div>
   );
 }

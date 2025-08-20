@@ -7,25 +7,25 @@ export default function Navbar() {
             study buddy
         </div>
         <div>
-            <Link
+            <Link id="link"
             href="/"
             
             >
             home
             </Link>
-            <Link
+            <Link id="link"
             href="/assignments"
             
             >
             assignments
             </Link>
-            <Link
+            <Link id="link"
             href="/todo"
             
             >
             to-do
             </Link>
-            <Link
+            <Link id="link"
             href="/settings"
             
             >
