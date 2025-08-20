@@ -108,15 +108,19 @@ export default function Assignments() {
                 }}>
                     <h3 id="title" style={{ marginBottom: "1rem" }}>create new assignment</h3>
                     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                        <input
-                            type="text"
-                            name="title"
-                            placeholder="assignment title"
-                            value={newAssignment.title}
-                            onChange={handleInputChange}
-                            style={{ borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px", padding: "0.5rem", textAlign: "left", fontFamily: "Lexend Exa, sans-serif", height: "40px" }}
-                        />
+                        <div style={{ minWidth: "150px", minHeight: "40px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>title:</p>
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="assignment title"
+                                value={newAssignment.title}
+                                onChange={handleInputChange}
+                                style={{ borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px", padding: "0.5rem", textAlign: "left", fontFamily: "Lexend Exa, sans-serif", height: "40px" }}
+                            />
+                        </div>
                         <div style={{ flex: "1", minWidth: "150px", minHeight: "40px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>due date:</p>
                             <input
                                 type="date"
                                 name="dueDate"
@@ -134,6 +138,7 @@ export default function Assignments() {
                             />
                         </div>
                         <div style={{ flex: "1", minWidth: "120px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>subject:</p>
                             <select
                                 name="subject"
                                 value={newAssignment.subject}
@@ -148,6 +153,7 @@ export default function Assignments() {
                                     height: "40px"
                                 }}
                             >
+                                
                                 <option value="">select subject</option>
                                 {allSubjects.length > 0 ? (
                                     allSubjects.map((subject) => (

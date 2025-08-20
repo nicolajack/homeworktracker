@@ -62,7 +62,7 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                 </div>
                 <div className="assignmentCard">
                     {/* Top row: Title/Subject on left, Due date/Progress on right */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
                         {/* Left side: Title and Subject */}
                         <div style={{ flex: 1, marginRight: "1rem" }}>
                             <h2 style={{ 
