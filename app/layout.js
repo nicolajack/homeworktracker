@@ -3,7 +3,7 @@ import { AssignmentsProvider } from "./context/AssignmentsContext.js";
 import "./globals.css";
 
 export const metadata = {
-  title: "homework tracker",
+  title: "study buddy",
   description: "track your assignments and homework",
   icons: {
     icon: "/favicon.ico",
