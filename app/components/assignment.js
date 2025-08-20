@@ -70,25 +70,28 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                                 color: progress === 100 ? "#28a745" : "#4b335e",
                                 textDecoration: progress === 100 ? "line-through" : "none",
                                 transition: "color 1s ease",
-                                margin: "0 0 0.5rem 0"
+                                margin: "0 0 0.5rem 0",
+                                fontFamily: "Lexend Exa, sans-serif",
+                                fontWeight: "bold",
                             }}>
                                 {title} {progress === 100 && "✅"}
                             </h2>
-                            <p style={{ color: "#fff", margin: "0", background: color, borderRadius: "6px", display: "inline-block", padding: "3px 10px", fontSize: "1.1rem" }}>
+                            <p style={{ color: "#fff", margin: "0", background: color, borderRadius: "6px", display: "inline-block", padding: "3px 10px", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>
                                 {subject}
                             </p>
                         </div>
                         
                         {/* Right side: Due date and Progress percentage */}
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
-                            <p style={{ color: "#4b335e", margin: "0 0 0.5rem 0", fontSize: "1.3rem", fontWeight: "bold" }}>
+                            <p style={{ color: "#4b335e", margin: "0 0 0.5rem 0", fontSize: "1.3rem", fontWeight: "bold", fontFamily: "Lexend Exa, sans-serif" }}>
                                 {formatDueDate(dueDate)}
                             </p>
                             <p style={{ 
                                 color: progress === 100 ? "#28a745" : "#666",
                                 fontWeight: progress === 100 ? "bold" : "normal",
                                 margin: "0",
-                                fontSize: "1.1rem"
+                                fontSize: "1.1rem",
+                                fontFamily: "Lexend Exa, sans-serif",
                             }}>
                                 {progress === 100 ? "completed!" : `${progress}%`}
                             </p>

@@ -64,7 +64,7 @@ export default function Settings() {
 
     return (
         <div style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-            <h1 style={{ color: "white", marginBottom: "1rem" }}>settings</h1>
+            <h1 style={{ color: "white", marginBottom: "1rem", fontFamily: "Lexend Exa, sans-serif" }}>settings</h1>
             <div style={{
                 backgroundColor: "#fff",
                 border: "1px solid #e0e0e0",
@@ -72,8 +72,8 @@ export default function Settings() {
                 padding: "2rem",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
             }}>
-                <h2 style={{ color: "#333", marginBottom: "1rem" }}>manage classes</h2>
-                <p style={{ color: "#666", marginBottom: "2rem" }}>
+                <h2 style={{ color: "#4b335e", marginBottom: "1rem", fontFamily: "Lexend Exa, sans-serif" }}>manage classes</h2>
+                <p style={{ color: "#666", marginBottom: "2rem", fontFamily: "Lexend Exa, sans-serif" }}>
                     add ur classes here to use them for ur assignments
                 </p>
 
@@ -84,13 +84,14 @@ export default function Settings() {
                         value={newClass}
                         onChange={(e) => setNewClass(e.target.value)}
                         onKeyPress={(e) => handleKeyPress(e, handleAddClass)}
-                        placeholder="class name"
+                        placeholder="biology, math, etc."
                         style={{
                             flex: 1,
                             padding: "0.75rem",
                             borderRadius: "4px",
                             border: "1px solid #ccc",
-                            fontSize: "1rem"
+                            fontSize: "1rem",
+                            fontFamily: "Lexend Exa, sans-serif"
                         }}
                     />
                     <button
@@ -102,7 +103,8 @@ export default function Settings() {
                             padding: "0.75rem 1.5rem",
                             borderRadius: "4px",
                             cursor: "pointer",
-                            fontSize: "1rem"
+                            fontSize: "1rem",
+                            fontFamily: "Lexend Exa, sans-serif"
                         }}
                     >
                         add class
@@ -112,7 +114,7 @@ export default function Settings() {
                 {/* Classes list */}
                 {classes.length > 0 ? (
                     <div>
-                        <h3 style={{ color: "#333", marginBottom: "1rem" }}>ur classes:</h3>
+                        <h3 style={{ color: "#4b335e", marginBottom: "1rem", fontFamily: "Lexend Exa, sans-serif" }}>ur classes:</h3>
                         <ul style={{ listStyle: "none", padding: 0 }}>
                             {classes.map((cls, index) => (
                                 <li key={index} style={{
@@ -123,7 +125,8 @@ export default function Settings() {
                                     margin: "0.5rem 0",
                                     backgroundColor: "#f8f9fa",
                                     border: "1px solid #e0e0e0",
-                                    borderRadius: "4px"
+                                    borderRadius: "4px",
+                                    fontFamily: "Lexend Exa, sans-serif"
                                 }}>
                                     {isEditing === index ? (
                                         <div style={{ display: "flex", gap: "0.5rem", flex: 1 }}>
@@ -148,7 +151,9 @@ export default function Settings() {
                                                     border: "none",
                                                     padding: "0.5rem 1rem",
                                                     borderRadius: "4px",
-                                                    cursor: "pointer"
+                                                    cursor: "pointer",
+                                                    fontSize: "0.9rem",
+                                                    fontFamily: "Lexend Exa, sans-serif"
                                                 }}
                                             >
                                                 save
@@ -161,7 +166,9 @@ export default function Settings() {
                                                     border: "none",
                                                     padding: "0.5rem 1rem",
                                                     borderRadius: "4px",
-                                                    cursor: "pointer"
+                                                    cursor: "pointer",
+                                                    fontSize: "0.9rem",
+                                                    fontFamily: "Lexend Exa, sans-serif"
                                                 }}
                                             >
                                                 cancel
@@ -180,7 +187,8 @@ export default function Settings() {
                                                         padding: "0.25rem 0.75rem",
                                                         borderRadius: "4px",
                                                         cursor: "pointer",
-                                                        fontSize: "0.9rem"
+                                                        fontSize: "0.9rem",
+                                                        fontFamily: "Lexend Exa, sans-serif"
                                                     }}
                                                 >
                                                     edit
@@ -194,7 +202,8 @@ export default function Settings() {
                                                         padding: "0.25rem 0.75rem",
                                                         borderRadius: "4px",
                                                         cursor: "pointer",
-                                                        fontSize: "0.9rem"
+                                                        fontSize: "0.9rem",
+                                                        fontFamily: "Lexend Exa, sans-serif"
                                                     }}
                                                 >
                                                     delete
@@ -207,7 +216,7 @@ export default function Settings() {
                         </ul>
                     </div>
                 ) : (
-                    <p style={{ color: "#999", textAlign: "center", padding: "2rem" }}>
+                    <p style={{ color: "#999", textAlign: "center", padding: "2rem", fontFamily: "Lexend Exa, sans-serif" }}>
                         silly!! u need to add classes here to use them for ur assignments
                     </p>
                 )}

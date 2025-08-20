@@ -50,10 +50,11 @@ export default function AssignmentDetail() {
                         border: "none",
                         padding: "0.5rem 1rem",
                         borderRadius: "4px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        fontFamily: "Lexend Exa, sans-serif",
                     }}
                 >
-                    back to Assignments
+                    back to assignments
                 </button>
             </div>
         );
@@ -129,7 +130,8 @@ export default function AssignmentDetail() {
                         border: "none",
                         padding: "0.5rem 1rem",
                         borderRadius: "4px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        fontFamily: "Lexend Exa, sans-serif",
                     }}
                 >
                     ← back
@@ -143,7 +145,8 @@ export default function AssignmentDetail() {
                             border: "none",
                             padding: "0.5rem 1rem",
                             borderRadius: "4px",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            fontFamily: "Lexend Exa, sans-serif",
                         }}
                     >
                         {isEditing ? "cancel" : "edit"}
@@ -151,12 +154,13 @@ export default function AssignmentDetail() {
                     <button
                         onClick={handleDelete}
                         style={{
-                            backgroundColor: "#ffb6c1",
+                            backgroundColor: "#f77968",
                             color: "white",
                             border: "none",
                             padding: "0.5rem 1rem",
                             borderRadius: "4px",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            fontFamily: "Lexend Exa, sans-serif",
                         }}
                     >
                         delete
@@ -174,19 +178,19 @@ export default function AssignmentDetail() {
                 {isEditing ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                         <div>
-                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>title</label>
+                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>title</label>
                             <input
                                 type="text"
                                 name="title"
                                 value={editData.title}
                                 onChange={handleInputChange}
-                                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
                             />
                         </div>
                         
                         <div style={{ display: "flex", gap: "1rem" }}>
                             <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>due date</label>
+                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>due date</label>
                                 <input
                                     type="date"
                                     name="dueDate"
@@ -197,30 +201,31 @@ export default function AssignmentDetail() {
                                         padding: "0.5rem", 
                                         borderRadius: "4px", 
                                         border: "1px solid #ccc",
-                                        backgroundColor: "white"
+                                        backgroundColor: "white",
+                                        fontFamily: "Lexend Exa, sans-serif"
                                     }}
                                 />
                             </div>
                             <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>subject</label>
+                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>subject</label>
                                 <input
                                     type="text"
                                     name="subject"
                                     value={editData.subject}
                                     onChange={handleInputChange}
-                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
                                 />
                             </div>
                         </div>
 
                         <div style={{ display: "flex", gap: "1rem" }}>
                             <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>priority</label>
+                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>priority</label>
                                 <select
                                     name="priority"
                                     value={editData.priority}
                                     onChange={handleInputChange}
-                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
                                 >
                                     <option value="low">low</option>
                                     <option value="medium">medium</option>
@@ -228,12 +233,12 @@ export default function AssignmentDetail() {
                                 </select>
                             </div>
                             <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>status</label>
+                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>status</label>
                                 <select
                                     name="status"
                                     value={editData.status}
                                     onChange={handleInputChange}
-                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
                                 >
                                     {statusOptions.map(option => (
                                         <option key={option.value} value={option.value}>{option.label}</option>
@@ -242,7 +247,7 @@ export default function AssignmentDetail() {
                             </div>
                         </div>
 
-                        <div>
+                        <div style={{ fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>
                             <ColorPicker
                                 currentColor={editData.color}
                                 onColorChange={handleColorChange}
@@ -251,13 +256,13 @@ export default function AssignmentDetail() {
                         </div>
 
                         <div>
-                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>description</label>
+                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>description</label>
                             <textarea
                                 name="description"
                                 value={editData.description}
                                 onChange={handleInputChange}
                                 rows={5}
-                                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", resize: "vertical" }}
+                                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", resize: "vertical", fontFamily: "Lexend Exa, sans-serif" }}
                                 placeholder="add notes, requirements, or additional details about this assignment..."
                             />
                         </div>
@@ -271,7 +276,8 @@ export default function AssignmentDetail() {
                                 padding: "0.75rem 1.5rem",
                                 borderRadius: "4px",
                                 cursor: "pointer",
-                                alignSelf: "flex-start"
+                                alignSelf: "flex-start",
+                                fontFamily: "Lexend Exa, sans-serif",
                             }}
                         >
                             save changes
@@ -286,10 +292,10 @@ export default function AssignmentDetail() {
                                     height: "24px",
                                     backgroundColor: assignment.color || "#4b335e",
                                     borderRadius: "4px",
-                                    border: "1px solid #ccc",
+                                    border: "1px solid #4b335e",
                                     flexShrink: 0
                                 }}></div>
-                                <h1 style={{ margin: 0, color: "#333" }}>{assignment.title}</h1>
+                                <h1 style={{ margin: 0, color: "#333", fontSize: "1.5rem", fontFamily: "Lexend Exa, sans-serif" }}>{assignment.title}</h1>
                             </div>
                             <span style={{
                                 backgroundColor: priorityColors[assignment.priority || "medium"],
@@ -298,13 +304,14 @@ export default function AssignmentDetail() {
                                 borderRadius: "12px",
                                 fontSize: "0.8rem",
                                 fontWeight: "bold",
-                                textTransform: "uppercase"
+                                textTransform: "uppercase",
+                                fontFamily: "Lexend Exa, sans-serif"
                             }}>
                                 {assignment.priority || "medium"} priority
                             </span>
                         </div>
 
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem", fontFamily: "Lexend Exa, sans-serif" }}>
                             <div>
                                 <strong>due date:</strong> {formatDueDate(assignment.dueDate)}
                             </div>
@@ -315,22 +322,22 @@ export default function AssignmentDetail() {
                                 <strong>status:</strong> {statusOptions.find(s => s.value === (assignment.status || "not-started"))?.label || "not started"}
                             </div>
                             <div>
-                                <strong>progress:</strong> {assignment.progress || 0}%
+                                <strong style={{ fontFamily: "Lexend Exa, sans-serif" }}>progress:</strong> {assignment.progress || 0}%
                             </div>
                         </div>
 
                         {assignment.description && (
-                            <div style={{ marginBottom: "1.5rem" }}>
+                            <div style={{ marginBottom: "1.5rem", fontFamily: "Lexend Exa, sans-serif" }}>
                                 <strong>description:</strong>
-                                <p style={{ marginTop: "0.5rem", padding: "1rem", backgroundColor: "#f8f9fa", borderRadius: "4px", lineHeight: "1.5" }}>
+                                <p style={{ marginTop: "0.5rem", padding: "1rem", backgroundColor: "#f8f9fa", borderRadius: "4px", lineHeight: "1.5", fontFamily: "Lexend Exa, sans-serif" }}>
                                     {assignment.description}
                                 </p>
                             </div>
                         )}
 
                         <div>
-                            <strong>progress:</strong>
-                            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "0.5rem" }}>
+                            <strong style={{ fontFamily: "Lexend Exa, sans-serif" }}>progress:</strong>
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "0.5rem", fontFamily: "Lexend Exa, sans-serif" }}>
                                 <span>{assignment.progress || 0}%</span>
                                 <input
                                     type="range"
@@ -342,9 +349,10 @@ export default function AssignmentDetail() {
                                         flex: 1,
                                         height: "8px",
                                         borderRadius: "4px",
-                                        background: `linear-gradient(to right, #007bff 0%, #007bff ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
+                                        background: `linear-gradient(to right, #4b335e 0%, #4b335e ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
                                         outline: "none",
-                                        cursor: "pointer"
+                                        cursor: "pointer",
+                                        fontFamily: "Lexend Exa, sans-serif"
                                     }}
                                 />
                             </div>
