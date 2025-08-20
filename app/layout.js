@@ -1,0 +1,24 @@
+import Navbar from "./components/navbar.js";
+import { AssignmentsProvider } from "./context/AssignmentsContext.js";
+import "./globals.css";
+
+export const metadata = {
+  title: "homework tracker",
+  description: "track your assignments and homework",
+  icons: {
+    icon: "/favico.png",
+  },
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <AssignmentsProvider>
+          <Navbar />
+          <main style={{ minHeight: "calc(100vh - 80px)" }}>{children}</main>
+        </AssignmentsProvider>
+      </body>
+    </html>
+  );
+}
