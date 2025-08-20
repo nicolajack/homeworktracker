@@ -38,7 +38,7 @@ export default function ColorPicker({ currentColor = "#4b335e", onColorChange, l
                     height: "20px",
                     backgroundColor: currentColor,
                     borderRadius: "50%",
-                    border: "2px solid #ccc",
+                    border: "2px solid #4b335e",
                     flexShrink: 0
                 }} />
                 
@@ -53,7 +53,8 @@ export default function ColorPicker({ currentColor = "#4b335e", onColorChange, l
                         backgroundColor: "white",
                         fontSize: "0.9rem",
                         cursor: "pointer",
-                        minWidth: "120px"
+                        minWidth: "120px",
+                        fontFamily: "Lexend Exa, sans-serif"
                     }}
                 >
                     {colorOptions.map((color) => (

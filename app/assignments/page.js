@@ -106,7 +106,7 @@ export default function Assignments() {
                     marginBottom: "2rem",
                     border: "1px solid #e0e0e0"
                 }}>
-                    <h3>create new assignment</h3>
+                    <h3 id="title" style={{ marginBottom: "1rem" }}>create new assignment</h3>
                     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                         <input
                             type="text"
@@ -114,9 +114,9 @@ export default function Assignments() {
                             placeholder="assignment title"
                             value={newAssignment.title}
                             onChange={handleInputChange}
-                            style={{ padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px" }}
+                            style={{ borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px", padding: "0.5rem", textAlign: "left", fontFamily: "Lexend Exa, sans-serif", height: "40px" }}
                         />
-                        <div style={{ flex: "1", minWidth: "150px" }}>
+                        <div style={{ flex: "1", minWidth: "150px", minHeight: "40px" }}>
                             <input
                                 type="date"
                                 name="dueDate"
@@ -127,7 +127,9 @@ export default function Assignments() {
                                     padding: "0.5rem", 
                                     borderRadius: "4px", 
                                     border: "1px solid #ccc",
-                                    backgroundColor: "white"
+                                    backgroundColor: "white",
+                                    fontFamily: "Lexend Exa, sans-serif",
+                                    height: "40px"
                                 }}
                             />
                         </div>
@@ -141,7 +143,9 @@ export default function Assignments() {
                                     padding: "0.5rem", 
                                     borderRadius: "4px", 
                                     border: "1px solid #ccc",
-                                    backgroundColor: "white"
+                                    backgroundColor: "white",
+                                    fontFamily: "Lexend Exa, sans-serif",
+                                    height: "40px"
                                 }}
                             >
                                 <option value="">select subject</option>
@@ -150,11 +154,11 @@ export default function Assignments() {
                                         <option key={subject} value={subject}>{subject}</option>
                                     ))
                                 ) : (
-                                    <option disabled>no classes found - add some in settings</option>
+                                    <option disabled>no classes found! add some in settings</option>
                                 )}
                             </select>
                         </div>
-                        <div style={{ flex: "1", minWidth: "150px" }}>
+                        <div style={{ flex: "1", minWidth: "150px", minHeight: "40px", fontFamily: "Lexend Exa, sans-serif" }}>
                             <ColorPicker
                                 currentColor={newAssignment.color}
                                 onColorChange={handleColorChange}
@@ -171,7 +175,8 @@ export default function Assignments() {
                                 border: "none",
                                 padding: "0.5rem 1rem",
                                 borderRadius: "4px",
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                fontFamily: "Lexend Exa, sans-serif"
                             }}
                         >
                             add assignment
@@ -188,7 +193,8 @@ export default function Assignments() {
                                 border: "none",
                                 padding: "0.5rem 1rem",
                                 borderRadius: "4px",
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                fontFamily: "Lexend Exa, sans-serif"
                             }}
                         >
                             cancel
