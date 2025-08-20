@@ -6,7 +6,7 @@ export const metadata = {
   title: "homework tracker",
   description: "track your assignments and homework",
   icons: {
-    icon: "/favico.png",
+    icon: "/favicon.ico",
   },
 };
 
