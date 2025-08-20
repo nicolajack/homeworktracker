@@ -155,7 +155,7 @@ export default function Pomodoro() {
                 <button className="resetButton" onClick={resetLongBreakTimer}>reset</button>
             </div>
         </div>
-            <h2 id="stats">wow! you've studied for {Math.floor((timesCompleted * 12.5) / 60)} hours and {Math.floor((timesCompleted * 12.5) % 60)} minutes today!</h2>
+            <h2 id="stats">wow! youve studied for {Math.floor((timesCompleted * 12.5) / 60)} hours and {Math.floor((timesCompleted * 12.5) % 60)} minutes today!</h2>
             <button className="resetAllButton" onClick={() => {
                 resetMainTimer();
                 resetBreakTimer();
