@@ -22,7 +22,6 @@ export default function Assignments() {
         }
     }, []);
 
-    // Combine saved classes with any existing subjects from assignments (as fallback)
     const existingSubjects = [...new Set(assignments.map(a => a.subject).filter(Boolean))];
     const allSubjects = [...new Set([...savedClasses, ...existingSubjects])];
     
@@ -31,7 +30,7 @@ export default function Assignments() {
         title: "",
         dueDate: "",
         subject: "",
-        color: "#f77968", // Updated to match new color picker default
+        color: "#f77968",
     });
     const [showCustomSubject, setShowCustomSubject] = useState(false);
 
@@ -212,12 +211,10 @@ export default function Assignments() {
             <ul style={{ listStyle: "none", padding: 0 }}>
                 {assignments
                     .sort((a, b) => {
-                        // Handle cases where dueDate might be null/undefined
                         if (!a.dueDate && !b.dueDate) return 0;
-                        if (!a.dueDate) return 1; // Put assignments without due dates at the end
                         if (!b.dueDate) return -1;
                         
-                        // Compare dates (closest due date first)
+                        // closest due date first
                         return new Date(a.dueDate) - new Date(b.dueDate);
                     })
                     .map((assignment) => (

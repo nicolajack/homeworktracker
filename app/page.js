@@ -11,7 +11,7 @@ export default function Home() {
     fetch("https://taylorswiftapi.onrender.com/get")
       .then(response => response.json())
       .then(data => {
-        console.log("API Response:", data); // Debug log
+        console.log("API Response:", data);
         if (data && data.quote) {
           setTaylorLyric(data.quote);
         } else if (data && data.lyric) {

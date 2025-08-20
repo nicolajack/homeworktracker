@@ -7,7 +7,7 @@ const AssignmentsContext = createContext();
 export function AssignmentsProvider({ children }) {
     const [assignments, setAssignments] = useState([]);
 
-    // Load assignments from localStorage on mount
+    // load assignments from local storage
     useEffect(() => {
         const savedAssignments = localStorage.getItem("homework-assignments");
         if (savedAssignments) {
@@ -19,16 +19,16 @@ export function AssignmentsProvider({ children }) {
         }
     }, []);
 
-    // Save assignments to localStorage whenever assignments change
+    // save assignments to local storage whenever they change
     useEffect(() => {
         localStorage.setItem("homework-assignments", JSON.stringify(assignments));
     }, [assignments]);
 
     const addAssignment = (assignment) => {
         const newAssignment = {
-            id: Date.now(), // Use timestamp for unique ID
+            id: Date.now(),
             ...assignment,
-            progress: 0 // Default progress
+            progress: 0
         };
         setAssignments(prev => [...prev, newAssignment]);
     };

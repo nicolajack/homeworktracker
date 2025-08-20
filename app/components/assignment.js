@@ -61,9 +61,9 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                 >
                 </div>
                 <div className="assignmentCard">
-                    {/* Top row: Title/Subject on left, Due date/Progress on right */}
+                    {/* top row */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
-                        {/* Left side: Title and Subject */}
+                        {/* left side */}
                         <div style={{ flex: 1, marginRight: "1rem" }}>
                             <h2 style={{ 
                                 fontSize: "1.7rem", 
@@ -81,7 +81,7 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                             </p>
                         </div>
                         
-                        {/* Right side: Due date and Progress percentage */}
+                        {/* right side */}
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                             <p style={{ color: "#4b335e", margin: "0 0 0.5rem 0", fontSize: "1.3rem", fontWeight: "bold", fontFamily: "Lexend Exa, sans-serif" }}>
                                 {formatDueDate(dueDate)}
@@ -98,7 +98,7 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                         </div>
                     </div>
                     
-                    {/* Bottom row: Progress slider spanning full width */}
+                    {/* bottom row */}
                     <div style={{ width: "100%" }}>
                         <input
                             type="range"
@@ -106,7 +106,7 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                             max="100"
                             value={progress}
                             onChange={handleProgressChange}
-                            onClick={(e) => e.stopPropagation()} // Prevent card click when clicking slider
+                            onClick={(e) => e.stopPropagation()} // prevent card click when clicking slider
                             style={{
                                 width: "100%",
                                 height: "8px",

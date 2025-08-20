@@ -6,7 +6,7 @@ export default function ToDo() {
     const [tasks, setTasks] = useState([]);
     const [text, setText] = useState("");
 
-    // Load tasks from localStorage on component mount
+    // load takss from localstorage
     useEffect(() => {
         const savedTasks = localStorage.getItem("todo-tasks");
         if (savedTasks) {
@@ -14,14 +14,13 @@ export default function ToDo() {
                 setTasks(JSON.parse(savedTasks));
             } catch (error) {
                 console.error("Error loading tasks:", error);
-                // If there's an error, set default tasks
                 setTasks([
                     { id: 1, text: "i love you", completed: false },
                     { id: 2, text: "smile", completed: false },
                 ]);
             }
         } else {
-            // Set default tasks if nothing in localStorage
+            // default tasks
             setTasks([
                 { id: 1, text: "i love you", completed: false },
                 { id: 2, text: "smile", completed: false },
@@ -29,7 +28,7 @@ export default function ToDo() {
         }
     }, []);
 
-    // Save tasks to localStorage whenever tasks change
+    // save tasks to local storage whenever they change
     useEffect(() => {
         localStorage.setItem("todo-tasks", JSON.stringify(tasks));
     }, [tasks]);

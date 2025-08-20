@@ -32,7 +32,7 @@ export default function ColorPicker({ currentColor = "#4b335e", onColorChange, l
                 {label}
             </label>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                {/* Color preview circle */}
+                {/* color circle */}
                 <div style={{
                     width: "20px",
                     height: "20px",
@@ -42,7 +42,6 @@ export default function ColorPicker({ currentColor = "#4b335e", onColorChange, l
                     flexShrink: 0
                 }} />
                 
-                {/* Dropdown */}
                 <select
                     value={currentColor}
                     onChange={handleColorChange}
