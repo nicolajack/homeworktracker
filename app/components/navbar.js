@@ -26,6 +26,11 @@ export default function Navbar() {
             to-do
             </Link>
             <Link id="link"
+            href="/pomodoro"
+            >
+                pomodoro
+            </Link>
+            <Link id="link"
             href="/settings"
             
             >

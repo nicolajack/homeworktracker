@@ -356,3 +356,109 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 2.3rem;
   color: #fff;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px); 
+}
+
+#pomotitle {
+  font-family: "Lexend Exa", sans-serif !important;
+  font-size: 2.3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  background: #4b335e;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(111, 83, 134, 0.3);
+}
+
+.mainTimerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #6c5281;
+    width: 60vw;
+    height: 60vh;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.breakTimerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(120, 161, 224);
+    width: 75vw;
+    height: 75vh;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.longBreakTimerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(72, 115, 87);
+    width: 75vw;
+    height: 75vh;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.timerDisplay {
+    font-family: "Lexend Exa", sans-serif !important;
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+#timerTitle {
+    font-family: "Lexend Exa", sans-serif !important;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.wrapper button {
+    font-family: "Lexend Exa", sans-serif !important;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    background-color: #4b335e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wrapper button:hover {
+    background-color: #fff;
+    color: #4b335e;
+}
+
+.timerButtons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+#stats {
+    font-family: "Lexend Exa", sans-serif !important;
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
