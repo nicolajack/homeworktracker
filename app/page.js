@@ -12,17 +12,7 @@ export default function Home() {
       .then(response => response.json())
       .then(data => {
         console.log("API Response:", data);
-        if (data && data.quote) {
-          setTaylorLyric(data.quote);
-        } else if (data && data.lyric) {
-          setTaylorLyric(data.lyric);
-        } else if (data && data.text) {
-          setTaylorLyric(data.text);
-        } else if (typeof data === 'string') {
-          setTaylorLyric(data);
-        } else {
-          setTaylorLyric("No lyric found in response");
-        }
+        setTaylorLyric((data.quote || data.lyric || data.text || data).toLowerCase());
       })
       .catch(error => {
         console.error("Error fetching Taylor Swift lyric:", error);
@@ -32,7 +22,7 @@ export default function Home() {
 
   return (
     <div className="homePage">
-      <h1 className="welcome">welcome, bella</h1>
+      <h1 className="welcome">welcome!</h1>
       <h2>you have {incompleteAssignments} assignments to complete</h2>
       <h2 id="lyric">{taylorLyric}</h2>
       <button onClick={fetchTaylorLyric} id="addbutton">new lyric</button>
