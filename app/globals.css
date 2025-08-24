@@ -42,6 +42,7 @@ nav {
   font-size: 1.6rem;
   flex-grow: 1;
   font-family: "Lexend Exa", sans-serif !important;
+  text-shadow: #4b335e 1px 0 10px;
 }
 
 #link {

@@ -4,15 +4,11 @@ export default function Navbar() {
     return (
         <nav>
         <div id="title">
+            <Link href="/">
             study buddy
+            </Link>
         </div>
         <div>
-            <Link id="link"
-            href="/"
-            
-            >
-            home
-            </Link>
             <Link id="link"
             href="/assignments"
             
