@@ -124,9 +124,8 @@ nav {
   font-weight: 500;
   font-size: 1.2rem;
   color: #4b335e;
-  margin: 2rem 6rem;
   background: rgba(255, 255, 255, 0.8);
-  padding: 2rem;
+  padding: 1rem 2rem;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);

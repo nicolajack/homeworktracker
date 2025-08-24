@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const { assignments } = useAssignments();
   const incompleteAssignments = assignments.filter(a => a.progress < 100).length;
-  const [taylorLyric, setTaylorLyric] = useState("Gray November, I've been down since July, Motion capture, Put me in a bad light");
+  const [taylorLyric, setTaylorLyric] = useState("in the cracks of light, i dreamed of you");
 
   function fetchTaylorLyric() {
     fetch("https://taylorswiftapi.onrender.com/get")
