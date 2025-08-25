@@ -105,7 +105,7 @@ export default function Assignments() {
                     marginBottom: "2rem",
                     border: "1px solid #e0e0e0"
                 }}>
-                    <h3 id="title" style={{ marginBottom: "1rem" }}>create new assignment</h3>
+                    <h3 id="title2" style={{ marginBottom: "1rem" }}>create new assignment</h3>
                     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                         <div style={{ minWidth: "150px", minHeight: "40px" }}>
                             <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>title:</p>
