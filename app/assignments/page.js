@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Assignment from "../components/assignment";
 import { useAssignments } from "../context/AssignmentsContext";
-import ColorPicker from "../components/ColorPicker";
 
 export default function Assignments() {
     const { assignments, addAssignment } = useAssignments();
@@ -23,44 +22,42 @@ export default function Assignments() {
     }, []);
 
     const existingSubjects = [...new Set(assignments.map(a => a.subject).filter(Boolean))];
-    const allSubjects = [...new Set([...savedClasses, ...existingSubjects])];
+    const allSubjects = [...new Set([
+        ...savedClasses.map(cls => typeof cls === 'string' ? cls : cls.name), 
+        ...existingSubjects
+    ])];
     
     const [showForm, setShowForm] = useState(false);
     const [newAssignment, setNewAssignment] = useState({
         title: "",
         dueDate: "",
-        subject: "",
-        color: "#f77968",
+        subject: ""
     });
-    const [showCustomSubject, setShowCustomSubject] = useState(false);
 
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
+    const getSubjectColor = (subject) => {
+        const classObj = savedClasses.find(cls => 
+            (typeof cls === 'string' ? cls : cls.name) === subject
+        );
+        return classObj && typeof classObj === 'object' ? classObj.color : "#f77968";
+    };
+
     const handleAddAssignment = () => {
         if (newAssignment.title && newAssignment.dueDate && newAssignment.subject) {
-            addAssignment(newAssignment);
-            setNewAssignment({ title: "", dueDate: "", subject: "", color: "#f77968" });
-            setShowCustomSubject(false);
+            const assignmentWithColor = {
+                ...newAssignment,
+                color: getSubjectColor(newAssignment.subject)
+            };
+            addAssignment(assignmentWithColor);
+            setNewAssignment({ title: "", dueDate: "", subject: "" });
             setShowForm(false);
         }
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        
-        if (name === "subject" && value === "custom") {
-            setShowCustomSubject(true);
-            setNewAssignment(prev => ({ ...prev, [name]: "" }));
-        } else {
-            if (name === "subject" && value !== "custom") {
-                setShowCustomSubject(false);
-            }
-            setNewAssignment(prev => ({ ...prev, [name]: value }));
-        }
-    };
-
-    const handleColorChange = (color) => {
-        setNewAssignment(prev => ({ ...prev, color }));
+        setNewAssignment(prev => ({ ...prev, [name]: value }));
     };
 
     const formatDueDate = (dateString) => {
@@ -163,13 +160,6 @@ export default function Assignments() {
                                 )}
                             </select>
                         </div>
-                        <div style={{ flex: "1", minWidth: "150px", minHeight: "40px", fontFamily: "Lexend Exa, sans-serif" }}>
-                            <ColorPicker
-                                currentColor={newAssignment.color}
-                                onColorChange={handleColorChange}
-                                label="assignment color:"
-                            />
-                        </div>
                     </div>
                     <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
                         <button
@@ -189,8 +179,7 @@ export default function Assignments() {
                         <button
                             onClick={() => {
                                 setShowForm(false);
-                                setShowCustomSubject(false);
-                                setNewAssignment({ title: "", dueDate: "", subject: "", color: "#f77968" });
+                                setNewAssignment({ title: "", dueDate: "", subject: "" });
                             }}
                             style={{
                                 backgroundColor: "#8e639a",
@@ -232,7 +221,7 @@ export default function Assignments() {
                             dueDate={assignment.dueDate} 
                             subject={assignment.subject}
                             progress={assignment.progress || 0}
-                            color={assignment.color || "#f77968"}
+                            color={assignment.color || getSubjectColor(assignment.subject)}
                         />
                     </li>
                 ))}

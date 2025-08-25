@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAssignments } from "../../context/AssignmentsContext";
-import ColorPicker from "../../components/ColorPicker";
 
 export default function AssignmentDetail() {
     const params = useParams();
@@ -12,6 +11,33 @@ export default function AssignmentDetail() {
     
     const assignmentId = parseInt(params.id);
     const assignment = assignments.find(a => a.id === assignmentId);
+    
+    // get classes from local storage
+    const [savedClasses, setSavedClasses] = useState([]);
+    
+    useEffect(() => {
+        const classes = localStorage.getItem("homework-classes");
+        if (classes) {
+            try {
+                setSavedClasses(JSON.parse(classes));
+            } catch (error) {
+                console.error("Error loading classes:", error);
+            }
+        }
+    }, []);
+
+    const existingSubjects = [...new Set(assignments.map(a => a.subject).filter(Boolean))];
+    const allSubjects = [...new Set([
+        ...savedClasses.map(cls => typeof cls === 'string' ? cls : cls.name), 
+        ...existingSubjects
+    ])];
+
+    const getSubjectColor = (subject) => {
+        const classObj = savedClasses.find(cls => 
+            (typeof cls === 'string' ? cls : cls.name) === subject
+        );
+        return classObj && typeof classObj === 'object' ? classObj.color : "#f77968";
+    };
     
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState({
@@ -62,11 +88,13 @@ export default function AssignmentDetail() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setEditData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleColorChange = (color) => {
-        setEditData(prev => ({ ...prev, color }));
+        setEditData(prev => {
+            const newData = { ...prev, [name]: value };
+            if (name === "subject") {
+                newData.color = getSubjectColor(value);
+            }
+            return newData;
+        });
     };
 
     const formatDueDate = (dateString) => {
@@ -208,13 +236,22 @@ export default function AssignmentDetail() {
                             </div>
                             <div style={{ flex: 1 }}>
                                 <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>subject</label>
-                                <input
-                                    type="text"
+                                <select
                                     name="subject"
                                     value={editData.subject}
                                     onChange={handleInputChange}
                                     style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
-                                />
+                                >
+                                    <option value="">select a subject</option>
+                                    {savedClasses.map(cls => {
+                                        const className = typeof cls === 'string' ? cls : cls.name;
+                                        return (
+                                            <option key={className} value={className}>
+                                                {className}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                             </div>
                         </div>
 
@@ -245,14 +282,6 @@ export default function AssignmentDetail() {
                                     ))}
                                 </select>
                             </div>
-                        </div>
-
-                        <div style={{ fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>
-                            <ColorPicker
-                                currentColor={editData.color}
-                                onColorChange={handleColorChange}
-                                label="assignment color:"
-                            />
                         </div>
 
                         <div>
@@ -290,7 +319,7 @@ export default function AssignmentDetail() {
                                 <div style={{
                                     width: "24px",
                                     height: "24px",
-                                    backgroundColor: assignment.color || "#4b335e",
+                                    backgroundColor: getSubjectColor(assignment.subject) || "#4b335e",
                                     borderRadius: "4px",
                                     border: "1px solid #4b335e",
                                     flexShrink: 0
@@ -349,7 +378,7 @@ export default function AssignmentDetail() {
                                         flex: 1,
                                         height: "8px",
                                         borderRadius: "4px",
-                                        background: `linear-gradient(to right, #4b335e 0%, #4b335e ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
+                                        background: `linear-gradient(to right, ${getSubjectColor(assignment.subject) || "#4b335e"} 0%, ${getSubjectColor(assignment.subject) || "#4b335e"} ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
                                         outline: "none",
                                         cursor: "pointer",
                                         fontFamily: "Lexend Exa, sans-serif"
