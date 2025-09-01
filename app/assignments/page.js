@@ -31,7 +31,10 @@ export default function Assignments() {
     const [newAssignment, setNewAssignment] = useState({
         title: "",
         dueDate: "",
-        subject: ""
+        subject: "",
+        description: "",
+        priority: "medium",
+        status: "not-started"
     });
 
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -50,7 +53,7 @@ export default function Assignments() {
                 color: getSubjectColor(newAssignment.subject)
             };
             addAssignment(assignmentWithColor);
-            setNewAssignment({ title: "", dueDate: "", subject: "" });
+            setNewAssignment({ title: "", dueDate: "", subject: "", description: "", priority: "medium", status: "not-started" });
             setShowForm(false);
         }
     };
@@ -161,6 +164,74 @@ export default function Assignments() {
                             </select>
                         </div>
                     </div>
+                    
+                    {/* Second row - priority and status */}
+                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
+                        <div style={{ flex: "1", minWidth: "120px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>priority:</p>
+                            <select
+                                name="priority"
+                                value={newAssignment.priority}
+                                onChange={handleInputChange}
+                                style={{ 
+                                    width: "100%",
+                                    padding: "0.5rem", 
+                                    borderRadius: "4px", 
+                                    border: "1px solid #ccc",
+                                    backgroundColor: "white",
+                                    fontFamily: "Lexend Exa, sans-serif",
+                                    height: "40px"
+                                }}
+                            >
+                                <option value="low">low</option>
+                                <option value="medium">medium</option>
+                                <option value="high">high</option>
+                            </select>
+                        </div>
+                        <div style={{ flex: "1", minWidth: "120px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>status:</p>
+                            <select
+                                name="status"
+                                value={newAssignment.status}
+                                onChange={handleInputChange}
+                                style={{ 
+                                    width: "100%",
+                                    padding: "0.5rem", 
+                                    borderRadius: "4px", 
+                                    border: "1px solid #ccc",
+                                    backgroundColor: "white",
+                                    fontFamily: "Lexend Exa, sans-serif",
+                                    height: "40px"
+                                }}
+                            >
+                                <option value="not-started">not started</option>
+                                <option value="in-progress">in progress</option>
+                                <option value="completed">completed</option>
+                                <option value="overdue">overdue</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    {/* Third row - description */}
+                    <div style={{ marginTop: "1rem" }}>
+                        <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>description:</p>
+                        <textarea
+                            name="description"
+                            value={newAssignment.description}
+                            onChange={handleInputChange}
+                            rows={3}
+                            placeholder="add notes, requirements, or additional details about this assignment..."
+                            style={{ 
+                                width: "100%",
+                                padding: "0.5rem", 
+                                borderRadius: "4px", 
+                                border: "1px solid #ccc",
+                                backgroundColor: "white",
+                                fontFamily: "Lexend Exa, sans-serif",
+                                resize: "vertical"
+                            }}
+                        />
+                    </div>
                     <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
                         <button
                             onClick={handleAddAssignment}
@@ -179,7 +250,7 @@ export default function Assignments() {
                         <button
                             onClick={() => {
                                 setShowForm(false);
-                                setNewAssignment({ title: "", dueDate: "", subject: "" });
+                                setNewAssignment({ title: "", dueDate: "", subject: "", description: "", priority: "medium", status: "not-started" });
                             }}
                             style={{
                                 backgroundColor: "#8e639a",
