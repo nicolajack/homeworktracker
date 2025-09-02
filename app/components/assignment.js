@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAssignments } from "../context/AssignmentsContext";
+import { useEffect } from "react";
 
 export default function Assignment ({ id, title, dueDate, subject, progress = 0, color = "#f77968", clickable = true }) {
     const router = useRouter();
@@ -10,6 +11,20 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
     const assignmentColor = color || "#f77968"; // Default to red if no color is provided
 
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+    useEffect(() => {
+        if (dueDate) {
+            const now = new Date();
+            const dueDateObj = new Date(dueDate);
+            const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+            
+            if (progress == 100 && now > oneDayAfterDue) {
+                setTimeout(() => {
+                    deleteAssignment(id);
+                }, 100);
+            }
+        }
+    }, [dueDate, id, deleteAssignment]);
 
     const formatDueDate = (dateString) => {
         if (!dateString) return "no due date";
@@ -30,12 +45,20 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
         const newProgress = parseInt(e.target.value);
         
         if (newProgress === 100) {
-            setTimeout(() => {
-                deleteAssignment(id);
-            }, 500);
+            updateAssignment(id, { progress: newProgress });
+            
+            const now = new Date();
+            const dueDateObj = new Date(dueDate);
+            const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000);
+            
+            if (now > oneDayAfterDue) {
+                setTimeout(() => {
+                    deleteAssignment(id);
+                }, 500);
+            }
+        } else {
+            updateAssignment(id, { progress: newProgress });
         }
-        
-        updateAssignment(id, { progress: newProgress });
     };
 
     const handleCardClick = () => {
@@ -67,14 +90,14 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
                         <div style={{ flex: 1, marginRight: "1rem" }}>
                             <h2 style={{ 
                                 fontSize: "1.7rem", 
-                                color: progress === 100 ? "#28a745" : "#4b335e",
+                                color: "#4b335e",
                                 textDecoration: progress === 100 ? "line-through" : "none",
                                 transition: "color 1s ease",
                                 margin: "0 0 0.5rem 0",
                                 fontFamily: "Lexend Exa, sans-serif",
                                 fontWeight: "bold",
                             }}>
-                                {title} {progress === 100 && "✅"}
+                                {title}
                             </h2>
                             <p style={{ color: "#fff", margin: "0", background: color, borderRadius: "6px", display: "inline-block", padding: "3px 10px", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>
                                 {subject}

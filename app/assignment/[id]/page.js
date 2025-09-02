@@ -166,7 +166,7 @@ export default function AssignmentDetail() {
                 </button>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button
-                        onClick={() => setIsEditing(!isEditing)}s
+                        onClick={() => setIsEditing(!isEditing)}
                         style={{
                             backgroundColor: isEditing ? "#8e639a" : "#4b335e",
                             color: "white",
