@@ -217,23 +217,7 @@ export default function AssignmentDetail() {
                         </div>
                         
                         <div style={{ display: "flex", gap: "1rem" }}>
-                            <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>due date</label>
-                                <input
-                                    type="date"
-                                    name="dueDate"
-                                    value={editData.dueDate}
-                                    onChange={handleInputChange}
-                                    style={{ 
-                                        width: "100%",
-                                        padding: "0.5rem", 
-                                        borderRadius: "4px", 
-                                        border: "1px solid #ccc",
-                                        backgroundColor: "white",
-                                        fontFamily: "Lexend Exa, sans-serif"
-                                    }}
-                                />
-                            </div>
+                            
                             <div style={{ flex: 1 }}>
                                 <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>subject</label>
                                 <select
@@ -253,6 +237,25 @@ export default function AssignmentDetail() {
                                     })}
                                 </select>
                             </div>
+
+                            <div style={{ flex: 1 }}>
+                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>due date</label>
+                                <input
+                                    type="date"
+                                    name="dueDate"
+                                    value={editData.dueDate}
+                                    onChange={handleInputChange}
+                                    style={{ 
+                                        width: "100%",
+                                        padding: "0.5rem", 
+                                        borderRadius: "4px", 
+                                        border: "1px solid #ccc",
+                                        backgroundColor: "white",
+                                        fontFamily: "Lexend Exa, sans-serif"
+                                    }}
+                                />
+                            </div>
+                            
                         </div>
 
                         <div style={{ display: "flex", gap: "1rem" }}>

@@ -107,7 +107,7 @@ export default function Assignments() {
                 }}>
                     <h3 id="title2" style={{ marginBottom: "1rem" }}>create new assignment</h3>
                     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                        <div style={{ minWidth: "150px", minHeight: "40px" }}>
+                        <div style={{ minWidth: "150px", minHeight: "40px", width: "50%" }}>
                             <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>title:</p>
                             <input
                                 type="text"
@@ -115,25 +115,7 @@ export default function Assignments() {
                                 placeholder="assignment title"
                                 value={newAssignment.title}
                                 onChange={handleInputChange}
-                                style={{ borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px", padding: "0.5rem", textAlign: "left", fontFamily: "Lexend Exa, sans-serif", height: "40px" }}
-                            />
-                        </div>
-                        <div style={{ flex: "1", minWidth: "150px", minHeight: "40px" }}>
-                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>due date:</p>
-                            <input
-                                type="date"
-                                name="dueDate"
-                                value={newAssignment.dueDate}
-                                onChange={handleInputChange}
-                                style={{ 
-                                    width: "100%",
-                                    padding: "0.5rem", 
-                                    borderRadius: "4px", 
-                                    border: "1px solid #ccc",
-                                    backgroundColor: "white",
-                                    fontFamily: "Lexend Exa, sans-serif",
-                                    height: "40px"
-                                }}
+                                style={{ borderRadius: "4px", border: "1px solid #ccc", flex: "1", minWidth: "200px", padding: "0.5rem", textAlign: "left", fontFamily: "Lexend Exa, sans-serif", height: "40px", width: "100%" }}
                             />
                         </div>
                         <div style={{ flex: "1", minWidth: "120px" }}>
@@ -162,6 +144,24 @@ export default function Assignments() {
                                     <option disabled>no classes found! add some in settings</option>
                                 )}
                             </select>
+                        </div>
+                        <div style={{ flex: "1", minWidth: "150px", minHeight: "40px" }}>
+                            <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>due date:</p>
+                            <input
+                                type="date"
+                                name="dueDate"
+                                value={newAssignment.dueDate}
+                                onChange={handleInputChange}
+                                style={{ 
+                                    width: "100%",
+                                    padding: "0.5rem", 
+                                    borderRadius: "4px", 
+                                    border: "1px solid #ccc",
+                                    backgroundColor: "white",
+                                    fontFamily: "Lexend Exa, sans-serif",
+                                    height: "40px"
+                                }}
+                            />
                         </div>
                     </div>
                     
