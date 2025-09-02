@@ -45,8 +45,6 @@ export default function AssignmentDetail() {
         dueDate: "",
         subject: "",
         description: "",
-        priority: "medium",
-        status: "not-started",
         color: "#f77968"
     });
 
@@ -57,8 +55,6 @@ export default function AssignmentDetail() {
                 dueDate: assignment.dueDate || "",
                 subject: assignment.subject || "",
                 description: assignment.description || "",
-                priority: assignment.priority || "medium",
-                status: assignment.status || "not-started",
                 color: assignment.color || "#f77968"
             });
         }
@@ -113,16 +109,24 @@ export default function AssignmentDetail() {
     };
 
     const handleProgressChange = (e) => {
+        e.stopPropagation();
         const newProgress = parseInt(e.target.value);
         
         if (newProgress === 100) {
-            setTimeout(() => {
-                deleteAssignment(assignmentId);
-                router.push("/assignments");
-            }, 500);
+            updateAssignment(id, { progress: newProgress });
+            
+            const now = new Date();
+            const dueDateObj = new Date(dueDate);
+            const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000);
+            
+            if (now > oneDayAfterDue) {
+                setTimeout(() => {
+                    deleteAssignment(id);
+                }, 500);
+            }
+        } else {
+            updateAssignment(id, { progress: newProgress });
         }
-        
-        updateAssignment(assignmentId, { progress: newProgress });
     };
 
     const handleDelete = () => {
@@ -131,19 +135,6 @@ export default function AssignmentDetail() {
             router.push("/assignments");
         }
     };
-
-    const priorityColors = {
-        low: "#28a745",
-        medium: "#ffc107",
-        high: "#dc3545"
-    };
-
-    const statusOptions = [
-        { value: "not-started", label: "not started" },
-        { value: "in-progress", label: "in progress" },
-        { value: "completed", label: "completed" },
-        { value: "overdue", label: "overdue" }
-    ];
 
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
@@ -258,34 +249,7 @@ export default function AssignmentDetail() {
                             
                         </div>
 
-                        <div style={{ display: "flex", gap: "1rem" }}>
-                            <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>priority</label>
-                                <select
-                                    name="priority"
-                                    value={editData.priority}
-                                    onChange={handleInputChange}
-                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
-                                >
-                                    <option value="low">low</option>
-                                    <option value="medium">medium</option>
-                                    <option value="high">high</option>
-                                </select>
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>status</label>
-                                <select
-                                    name="status"
-                                    value={editData.status}
-                                    onChange={handleInputChange}
-                                    style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
-                                >
-                                    {statusOptions.map(option => (
-                                        <option key={option.value} value={option.value}>{option.label}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
+                        
 
                         <div>
                             <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>description</label>
@@ -329,18 +293,6 @@ export default function AssignmentDetail() {
                                 }}></div>
                                 <h1 style={{ margin: 0, color: "#333", fontSize: "1.5rem", fontFamily: "Lexend Exa, sans-serif" }}>{assignment.title}</h1>
                             </div>
-                            <span style={{
-                                backgroundColor: priorityColors[assignment.priority || "medium"],
-                                color: "white",
-                                padding: "0.25rem 0.75rem",
-                                borderRadius: "12px",
-                                fontSize: "0.8rem",
-                                fontWeight: "bold",
-                                textTransform: "uppercase",
-                                fontFamily: "Lexend Exa, sans-serif"
-                            }}>
-                                {assignment.priority || "medium"} priority
-                            </span>
                         </div>
 
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem", fontFamily: "Lexend Exa, sans-serif" }}>
@@ -349,12 +301,6 @@ export default function AssignmentDetail() {
                             </div>
                             <div>
                                 <strong>subject:</strong> {assignment.subject}
-                            </div>
-                            <div>
-                                <strong>status:</strong> {statusOptions.find(s => s.value === (assignment.status || "not-started"))?.label || "not started"}
-                            </div>
-                            <div>
-                                <strong style={{ fontFamily: "Lexend Exa, sans-serif" }}>progress:</strong> {assignment.progress || 0}%
                             </div>
                         </div>
 
