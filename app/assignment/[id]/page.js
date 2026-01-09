@@ -109,23 +109,24 @@ export default function AssignmentDetail() {
     };
 
     const handleProgressChange = (e) => {
-        e.stopPropagation();
         const newProgress = parseInt(e.target.value);
         
         if (newProgress === 100) {
-            updateAssignment(id, { progress: newProgress });
+            updateAssignment(assignmentId, { progress: newProgress });
             
             const now = new Date();
-            const dueDateObj = new Date(dueDate);
+            const dueDateObj = new Date(assignment.dueDate);
             const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000);
             
             if (now > oneDayAfterDue) {
                 setTimeout(() => {
-                    deleteAssignment(id);
+                    deleteAssignment(assignmentId);
+                    router.push("/assignments");
                 }, 500);
             }
+            
         } else {
-            updateAssignment(id, { progress: newProgress });
+            updateAssignment(assignmentId, { progress: newProgress });
         }
     };
 
@@ -321,16 +322,18 @@ export default function AssignmentDetail() {
                                     type="range"
                                     min="0"
                                     max="100"
-                                    value={assignment.progress || 0}
+                                    value={assignment.progress}
                                     onChange={handleProgressChange}
+                                    onClick={(e) => e.stopPropagation()} // prevent card click when clicking slider
                                     style={{
-                                        flex: 1,
+                                        width: "100%",
                                         height: "8px",
                                         borderRadius: "4px",
-                                        background: `linear-gradient(to right, ${getSubjectColor(assignment.subject) || "#4b335e"} 0%, ${getSubjectColor(assignment.subject) || "#4b335e"} ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
+                                        background: `linear-gradient(to right, ${assignment.color} 0%, ${assignment.color} ${assignment.progress}%, #e0e0e0 ${assignment.progress}%, #e0e0e0 100%)`,
                                         outline: "none",
                                         cursor: "pointer",
-                                        fontFamily: "Lexend Exa, sans-serif"
+                                        WebkitAppearance: "none",
+                                        appearance: "none"
                                     }}
                                 />
                             </div>
