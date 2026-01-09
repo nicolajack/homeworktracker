@@ -403,8 +403,8 @@ input[type="range"]::-webkit-slider-thumb {
     align-items: center;
     justify-content: center;
     background-color: rgb(120, 161, 224);
-    width: 75vw;
-    height: 75vh;
+    width: 60vw;
+    height: 60vh;
     margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -417,8 +417,8 @@ input[type="range"]::-webkit-slider-thumb {
     align-items: center;
     justify-content: center;
     background-color: rgb(72, 115, 87);
-    width: 75vw;
-    height: 75vh;
+    width: 60vw;
+    height: 60vh;
     margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -11,8 +11,13 @@ export default function Pomodoro() {
     const [displayTwo, setDisplayTwo] = useState('none');
     const [displayThree, setDisplayThree] = useState('none');
     const [timesCompleted, setTimesCompleted] = useState(0);
-    // need to upload audio to this project lol
-    // const completeAudio = new Audio('/complete.mp3');
+    const completeAudioRef = useRef(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            completeAudioRef.current = new window.Audio('/completeAudio.mp3');
+        }
+    }, []);
 
     // the pomodoro timer will start with 25 minutes
     function startMainTimer(){
@@ -24,7 +29,7 @@ export default function Pomodoro() {
                     intervalRef.current = null;
 
                     setTimesCompleted((prevCount) => {
-                        completeAudio.play();
+                        if (completeAudioRef.current) completeAudioRef.current.play();
                         const newCount = prevCount + 1;
                         if (newCount % 8 === 0){
                             setDisplayOne('none');
@@ -55,7 +60,7 @@ export default function Pomodoro() {
         intervalRef.current = setInterval(() => {
             setTimeLeft((prevTimeLeft) => {
                 if (prevTimeLeft <= 0){
-                    completeAudio.play();
+                    if (completeAudioRef.current) completeAudioRef.current.play();
                     clearInterval(intervalRef.current);
                     intervalRef.current = null;
                     setDisplayOne('flex');
@@ -75,7 +80,7 @@ export default function Pomodoro() {
         intervalRef.current = setInterval(() => {
             setTimeLeft((prevTimeLeft) => {
                 if (prevTimeLeft <= 0){
-                    completeAudio.play();
+                    if (completeAudioRef.current) completeAudioRef.current.play();
                     clearInterval(intervalRef.current);
                     intervalRef.current = null;
                     setDisplayOne('flex');
