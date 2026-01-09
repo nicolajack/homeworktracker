@@ -99,7 +99,7 @@ export default function AssignmentDetail() {
         if (isNaN(date.getTime())) return dateString;
         
         const month = monthNames[date.getMonth()];
-        const day = date.getDate();
+        const day = date.getDate() + 1;
         return `${month} ${day}`;
     };
 
@@ -324,7 +324,6 @@ export default function AssignmentDetail() {
                                     max="100"
                                     value={assignment.progress}
                                     onChange={handleProgressChange}
-                                    onClick={(e) => e.stopPropagation()} // prevent card click when clicking slider
                                     style={{
                                         width: "100%",
                                         height: "8px",
