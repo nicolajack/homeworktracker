@@ -1,5 +1,6 @@
 import Navbar from "./components/navbar.js";
 import { AssignmentsProvider } from "./context/AssignmentsContext.js";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main style={{ minHeight: "calc(100vh - 80px)" }}>{children}</main>
         </AssignmentsProvider>
+        <Analytics />
       </body>
     </html>
   );
