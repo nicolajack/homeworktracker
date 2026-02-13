@@ -1,0 +1,170 @@
+html {
+    overflow: hidden;
+}
+
+.calendar {
+    max-width: 1025px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(75, 51, 94, 0.12);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-title {
+    font-family: "Lexend Exa", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4b335e;
+    text-transform: lowercase;
+}
+
+.calendar-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f3ecf8;
+    color: #4b335e;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.calendar-nav-btn:hover {
+    background: #4b335e;
+    color: white;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-weekday {
+    font-family: "Lexend Exa", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #8e639a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+.calendar-day {
+    min-height: 110px;
+    padding: 6px 8px;
+    border-radius: 10px;
+    background: #faf7fc;
+    border: 1.5px solid transparent;
+    text-align: left;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-day:hover {
+    background: #f3ecf8;
+    border-color: #e0d0ed;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    min-height: 0;
+}
+
+.calendar-day.empty:hover {
+    background: transparent;
+}
+
+.calendar-day.today {
+    border-color: #4b335e;
+    background: #f3ecf8;
+}
+
+.calendar-day.today .day-number {
+    background: #4b335e;
+    color: white;
+}
+
+.day-number {
+    font-family: "Lexend Exa", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4b335e;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+.day-assignments {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.calAssignment {
+    color: white;
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 3px 6px;
+    border-radius: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.calAssignment:hover {
+    opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+    .calendar {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .calendar-title {
+        font-size: 1.3rem;
+    }
+
+    .calendar-day {
+        min-height: 60px;
+        padding: 4px;
+    }
+
+    .day-number {
+        font-size: 0.7rem;
+        width: 22px;
+        height: 22px;
+    }
+
+    .calAssignment {
+        font-size: 0.55rem;
+        padding: 2px 3px;
+    }
+}

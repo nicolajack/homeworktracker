@@ -22,6 +22,11 @@ export default function Navbar() {
             to-do
             </Link>
             <Link id="link"
+            href="/calendar"
+            >
+                calendar
+            </Link>
+            <Link id="link"
             href="/pomodoro"
             >
                 pomodoro
