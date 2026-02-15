@@ -4,11 +4,16 @@ html {
 
 .calendar {
     max-width: 1025px;
+    max-height: calc(100vh - 4rem);
     margin: 2rem auto;
     padding: 2rem;
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(75, 51, 94, 0.12);
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .calendar-header {
