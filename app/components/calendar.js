@@ -72,7 +72,11 @@ export default function Calendar() {
                                         className="calAssignment" 
                                         key={a.id} 
                                         onClick={() => router.push(`/assignment/${a.id}`)} 
-                                        style={{ backgroundColor: a.color || "#4b335e" }}
+                                        style={{ 
+                                            backgroundColor: a.color || "#4b335e",
+                                            textDecoration: a.progress === 100 ? "line-through" : "none",
+                                            opacity: a.progress === 100 ? 0.6 : 1
+                                        }}
                                     >
                                         {a.title}
                                     </div>

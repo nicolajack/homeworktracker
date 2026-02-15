@@ -1,11 +1,13 @@
 "use client";
 import { useAssignments } from "./context/AssignmentsContext";
 import { useEffect, useState } from "react";
+import Popup from "./components/popup";
 
 export default function Home() {
   const { assignments } = useAssignments();
   const incompleteAssignments = assignments.filter(a => a.progress < 100).length;
   const [taylorLyric, setTaylorLyric] = useState("in the cracks of light, i dreamed of you");
+  const [showPopUp, setShowPopUp] = useState(false);
 
   function fetchTaylorLyric() {
     fetch("https://taylorswiftapi.onrender.com/get")
