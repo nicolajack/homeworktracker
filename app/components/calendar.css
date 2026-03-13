@@ -1,7 +1,3 @@
-html {
-    overflow: hidden;
-}
-
 .calendar {
     max-width: 1025px;
     max-height: calc(100vh - 4rem);
