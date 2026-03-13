@@ -38,6 +38,8 @@ export default function Assignments() {
         description: ""
     });
 
+    const [showCompleted, setShowCompleted] = useState(false);
+
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
     const getSubjectColor = (subject) => {
@@ -74,28 +76,39 @@ export default function Assignments() {
         return `${month} ${day}`;
     };
 
+    // determine which assignments to show in the list
+    const listToShow = showCompleted ? assignments : visible;
+
     return (
         <div style={{ padding: "2rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
                 <h1 id="assignmentsTitle">assignments</h1>
-                <button
-                    onClick={() => setShowForm(!showForm)}
-                    style={{
-                        backgroundColor: "#4b335e",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "50%",
-                        width: "50px",
-                        height: "50px",
-                        fontSize: "24px",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
-                    }}
-                >
-                    +
-                </button>
+                <div id="addShowButtons">
+                    <button
+                        onClick={() => setShowCompleted(!showCompleted)}
+                        id="showCompleted"
+                    >
+                        {showCompleted ? "hide completed" : "show completed"}
+                    </button>
+                    <button
+                        onClick={() => setShowForm(!showForm)}
+                        style={{
+                            backgroundColor: "#4b335e",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "50%",
+                            width: "50px",
+                            height: "50px",
+                            fontSize: "24px",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
+                        +
+                    </button>
+                </div>
             </div>
 
             {showForm && (
@@ -224,11 +237,10 @@ export default function Assignments() {
             )}
 
             <ul style={{ listStyle: "none", padding: 0 }}>
-                {visible
+                {listToShow
                     .sort((a, b) => {
                         if (!a.dueDate && !b.dueDate) return 0;
                         if (!b.dueDate) return -1;
-                        
                         // closest due date first
                         return new Date(a.dueDate) - new Date(b.dueDate);
                     })
