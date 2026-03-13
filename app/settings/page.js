@@ -11,6 +11,7 @@ export default function Settings() {
     const [editValue, setEditValue] = useState("");
     const [editColor, setEditColor] = useState("");
     const [hasLoaded, setHasLoaded] = useState(false);
+    const [name, setName] = useState("you");
 
     // load classes from localStorage
     useEffect(() => {
@@ -35,6 +36,21 @@ export default function Settings() {
         }
         setHasLoaded(true);
     }, []);
+
+    // load saved name from localStorage
+    useEffect(() => {
+        const savedName = localStorage.getItem("homework-name");
+        if (savedName) {
+            setName(savedName);
+        }
+    }, []);
+
+    // persist name to localStorage when it changes
+    useEffect(() => {
+        if (name !== undefined) {
+            localStorage.setItem("homework-name", name);
+        }
+    }, [name]);
 
     // save classes to localStorage whenever classes change (but only after initial load)
     useEffect(() => {
@@ -101,9 +117,28 @@ export default function Settings() {
                 padding: "2rem",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
             }}>
+                <h2 style={{ color: "#4b335e", marginBottom: "1rem", fontFamily: "Lexend Exa, sans-serif" }}>add your name</h2>
+
+                <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="ethel cain"
+                            style={{
+                                flex: 1,
+                                padding: "0.75rem",
+                                borderRadius: "4px",
+                                border: "1px solid #ccc",
+                                fontSize: "1rem",
+                                fontFamily: "Lexend Exa, sans-serif"
+                            }}
+                        />
+                    </div>
+
                 <h2 style={{ color: "#4b335e", marginBottom: "1rem", fontFamily: "Lexend Exa, sans-serif" }}>manage classes</h2>
                 <p style={{ color: "#666", marginBottom: "2rem", fontFamily: "Lexend Exa, sans-serif" }}>
-                    add ur classes here to use them for ur assignments
+                    add your classes here to use them for your assignments
                 </p>
 
                 {/* add new class */}
