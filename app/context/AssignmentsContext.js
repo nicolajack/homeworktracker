@@ -54,11 +54,16 @@ export function AssignmentsProvider({ children }) {
         ));
     };
 
+    const deleteAssignment = (id) => {
+        setAssignments(prev => prev.filter(assignment => assignment.id !== id));
+    }
+
     const value = {
         assignments,
         addAssignment,
         updateAssignment,
-        archiveAssignment
+        archiveAssignment,
+        deleteAssignment,
     };
 
     return (
