@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 export default function Assignment ({ id, title, dueDate, subject, progress = 0, color = "#f77968", clickable = true }) {
     const router = useRouter();
-    const { updateAssignment, deleteAssignment } = useAssignments();
+    const { updateAssignment, archiveAssignment } = useAssignments();
 
-    const assignmentColor = color || "#f77968"; // Default to red if no color is provided
+    const assignmentColor = color || "#f77968"; 
 
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
@@ -16,22 +16,22 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
         if (dueDate) {
             const now = new Date();
             const dueDateObj = new Date(dueDate);
-            const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+            const oneDayAfterDue = new Date(dueDateObj.getTime() + 24 * 60 * 60 * 1000); // add 1 day
             
             if (progress == 100 && now > oneDayAfterDue) {
                 setTimeout(() => {
-                    deleteAssignment(id);
+                    archiveAssignment(id);
                 }, 100);
             }
         }
-    }, [dueDate, id, deleteAssignment]);
+    }, [dueDate, id, archiveAssignment]);
 
     const formatDueDate = (dateString) => {
         if (!dateString) return "no due date";
         
         // Parse the date string as local date to avoid timezone issues
         const [year, month, day] = dateString.split('-');
-        const date = new Date(year, month - 1, day); // month is 0-indexed
+        const date = new Date(year, month - 1, day);
         
         if (isNaN(date.getTime())) return dateString;
         
@@ -53,7 +53,7 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
             
             if (now > oneDayAfterDue) {
                 setTimeout(() => {
-                    deleteAssignment(id);
+                    archiveAssignment(id);
                 }, 500);
             }
         } else {

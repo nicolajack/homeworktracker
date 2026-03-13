@@ -9,6 +9,9 @@ export default function Assignments() {
     
     // get classes from local storage
     const [savedClasses, setSavedClasses] = useState([]);
+
+    // to get which assignments have been archived
+    const visible = assignments.filter(a => !a.archived);
     
     useEffect(() => {
         const classes = localStorage.getItem("homework-classes");
@@ -221,7 +224,7 @@ export default function Assignments() {
             )}
 
             <ul style={{ listStyle: "none", padding: 0 }}>
-                {assignments
+                {visible
                     .sort((a, b) => {
                         if (!a.dueDate && !b.dueDate) return 0;
                         if (!b.dueDate) return -1;

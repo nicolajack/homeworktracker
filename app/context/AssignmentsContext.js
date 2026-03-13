@@ -12,7 +12,10 @@ export function AssignmentsProvider({ children }) {
         const savedAssignments = localStorage.getItem("homework-assignments");
         if (savedAssignments) {
             try {
-                setAssignments(JSON.parse(savedAssignments));
+                const parsed = JSON.parse(savedAssignments);
+                // ensure archived flag exists on older saved items
+                const normalized = parsed.map(a => ({ ...a, archived: a.archived ?? false }));
+                setAssignments(normalized);
             } catch (error) {
                 console.error("Error loading assignments from localStorage:", error);
             }
@@ -28,7 +31,8 @@ export function AssignmentsProvider({ children }) {
         const newAssignment = {
             id: Date.now(),
             ...assignment,
-            progress: 0
+            progress: 0,
+            archived: false
         };
         setAssignments(prev => [...prev, newAssignment]);
     };
@@ -43,15 +47,18 @@ export function AssignmentsProvider({ children }) {
         );
     };
 
-    const deleteAssignment = (id) => {
-        setAssignments(prev => prev.filter(assignment => assignment.id !== id));
+    const archiveAssignment = (id) => {
+        // mark as archived instead of removing so calendar can still show completed items
+        setAssignments(prev => prev.map(assignment =>
+            assignment.id === id ? { ...assignment, archived: true } : assignment
+        ));
     };
 
     const value = {
         assignments,
         addAssignment,
         updateAssignment,
-        deleteAssignment
+        archiveAssignment
     };
 
     return (
