@@ -186,7 +186,7 @@ export default function Home() {
         <div className="bentoCard bentoCardWide" style={staggerDelay(0)}>
           <div className="bentoLabelRow">
             <span className="bentoLabel" style={{ marginBottom: 0 }}>Upcoming Assignments</span>
-            <Link href="/assignments">View all →</Link>
+            <Link href="/assignments">view all →</Link>
           </div>
           {upcoming.length > 0 ? (
             <div className="upcomingList">
@@ -202,7 +202,7 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <p className="emptyState">No upcoming assignments</p>
+            <p className="emptyState">no upcoming assignments</p>
           )}
         </div>
 
@@ -220,17 +220,17 @@ export default function Home() {
           <div className="toolIcon">
             <ClockIcon />
           </div>
-          <div className="toolLabel">Pomodoro</div>
+          <div className="toolLabel">pomodoro</div>
         </Link>
 
         <Link href="/calendar" className="bentoCard toolCard" style={staggerDelay(3)}>
           <div className="toolIcon"><CalendarIcon /></div>
-          <div className="toolLabel">Calendar</div>
+          <div className="toolLabel">calendar</div>
         </Link>
 
         <Link href="/todo" className="bentoCard toolCard" style={staggerDelay(4)}>
           <div className="toolIcon"><TodoIcon /></div>
-          <div className="toolLabel">To-Do</div>
+          <div className="toolLabel">to-do</div>
         </Link>
         {/* bringing back ts lyric */}
         <div className="bentoCard" style={{ ...staggerDelay(5), gridColumn: '1 / -1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '1rem 1.25rem' }}>
