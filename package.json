@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "@mui/icons-material": "^7.3.9",
     "@vercel/analytics": "^1.6.1",
     "claude": "^0.1.1",

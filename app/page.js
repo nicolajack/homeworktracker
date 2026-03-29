@@ -3,6 +3,7 @@ import { useAssignments } from "./context/AssignmentsContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { THEME_PALETTES, THEME_STORAGE_KEY, findPaletteById, applyPaletteVars } from "./theme";
+import { useForm } from '@formspree/react';
 
 
 const ClockIcon = ({ color = 'var(--accent)', size = 24 }) => (
@@ -58,6 +59,7 @@ export default function Home() {
   const [name, setName] = useState("you");
   const [taylorLyric, setTaylorLyric] = useState("in the cracks of light, i dreamed of you");
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [activePaletteId, setActivePaletteId] = useState(THEME_PALETTES[0]?.id || "twilight");
 
   function fetchTaylorLyric() {
@@ -123,9 +125,28 @@ export default function Home() {
     }
   };
 
+  const [formState, handleFeedbackSubmit] = useForm("xaqlegoo");
+
+  useEffect(() => {
+    if (formState.succeeded) {
+      const timer = setTimeout(() => setIsFeedbackModalOpen(false), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [formState.succeeded]);
+
   return (
     <div className="homePage">
-      {/* floating theme button */}
+      {/* floating feedback button */}
+      <button
+        type="button"
+        className="feedbackButton"
+        onClick={() => setIsFeedbackModalOpen(true)}
+        aria-label="Send feedback"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+        </svg>
+      </button>
       <button
         type="button"
         className="themeToggleButton"
@@ -134,6 +155,40 @@ export default function Home() {
       >
         🎨
       </button>
+
+      {isFeedbackModalOpen && (
+        <div className="themeModalOverlay feedbackOverlay" onClick={() => setIsFeedbackModalOpen(false)}>
+          <div className="themeModal feedbackModal" onClick={(e) => e.stopPropagation()}>
+            <div className="themeModalHeader">
+              <h2>send feedback</h2>
+              <button
+                type="button"
+                className="themeModalClose"
+                onClick={() => setIsFeedbackModalOpen(false)}
+                aria-label="Close feedback form"
+              >
+                ×
+              </button>
+            </div>
+            {formState.succeeded ? (
+              <p className="feedbackSuccess">thanks for ur feedback :3!</p>
+            ) : (
+              <form onSubmit={handleFeedbackSubmit} className="feedbackForm">
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="what's on ur mind?"
+                  rows={4}
+                  required
+                />
+                <button type="submit" className="feedbackSubmitBtn" disabled={formState.submitting}>
+                  {formState.submitting ? "sending..." : "send"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
       {isThemeModalOpen && (
         <div className="themeModalOverlay" onClick={() => setIsThemeModalOpen(false)}>

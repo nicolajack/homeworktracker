@@ -1060,3 +1060,104 @@ input[type="range"]::-webkit-slider-thumb {
                         cursor: pointer;
                         font-family: Lexend Exa, sans-serif;
 }
+
+.feedbackButton {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 40;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.feedbackButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+  background: var(--accent);
+  color: #fff;
+}
+
+.feedbackButton:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.feedbackOverlay {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-left: 1.5rem;
+  padding-right: unset;
+}
+
+.feedbackModal {
+  transform-origin: bottom left;
+}
+
+.feedbackForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.feedbackForm textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1.5px solid var(--accent-soft);
+  padding: 0.7rem 0.8rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--accent-text);
+  background: var(--bg-gradient-from);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.feedbackForm textarea:focus {
+  border-color: var(--accent);
+}
+
+.feedbackSubmitBtn {
+  align-self: flex-end;
+  padding: 0.45rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-family: "Lexend Exa", sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.feedbackSubmitBtn:hover {
+  opacity: 0.88;
+}
+
+.feedbackSubmitBtn:active {
+  transform: scale(0.97);
+}
+
+.feedbackSubmitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedbackSuccess {
+  font-size: 0.9rem;
+  color: var(--accent-text);
+  text-align: center;
+  padding: 1rem 0;
+}
