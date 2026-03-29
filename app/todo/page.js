@@ -15,14 +15,14 @@ export default function ToDo() {
             } catch (error) {
                 console.error("Error loading tasks:", error);
                 setTasks([
-                    { id: 1, text: "i love you", completed: false },
+                    { id: 1, text: "have a good day!", completed: false },
                     { id: 2, text: "smile", completed: false },
                 ]);
             }
         } else {
             // default tasks
             setTasks([
-                { id: 1, text: "i love you", completed: false },
+                { id: 1, text: "have a good day!", completed: false },
                 { id: 2, text: "smile", completed: false },
             ]);
         }
@@ -54,7 +54,7 @@ export default function ToDo() {
     }
     return (
         <div id="todopage">
-            <h1>to-do list</h1>
+            <h1 className="todoTitle">to-do list</h1>
             <div id="todolist">
                 {tasks.map(task => (
                     <ToDoItem key={task.id} task={task} deleteTask={deleteTask} toggleCompleted={toggleCompleted} />

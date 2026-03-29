@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
+/* using this allows changes to color palette to be made easily and effectively */
+:root {
+  --bg-gradient-from: #ebd6ff;
+  --bg-gradient-to: #cab0e8;
+  --accent: #4b335e;
+  --accent-soft: #f3ecf8;
+  --accent-strong: #5a4070;
+  --accent-text: #4b335e;
+}
+
 html,
 body {
   font-family: "Lexend Exa", Helvetica, sans-serif, sans-serif;
@@ -9,11 +19,11 @@ body {
 }
 
 body {
-  background: #ebd6ff;
-  color: #fff;
-  background: radial-gradient(circle,rgba(235, 214, 255, 1) 0%, rgba(181, 148, 212, 1) 100%);
+  background: var(--bg-gradient-from);
+  background: linear-gradient(135deg, var(--bg-gradient-from) 0%, var(--bg-gradient-to) 100%);
   font-family: helvetica, arial, sans-serif;
   color: #333;
+  transition: background 0.35s ease;
 }
 
 * {
@@ -28,7 +38,7 @@ a {
 }
 
 nav {
-  background: rgb(122, 93, 150);
+  background: var(--accent);
   color: white;
   padding: 1rem;
   display: flex;
@@ -42,7 +52,7 @@ nav {
   font-size: 1.6rem;
   flex-grow: 1;
   font-family: "Lexend Exa", sans-serif !important;
-  text-shadow: #4b335e 1px 0 10px;
+  text-shadow: var(--accent) 1px 0 10px;
 }
 
 #title2 {
@@ -60,16 +70,150 @@ nav {
 }
 
 #link:hover {
-  background: #4b335e;
-  color: white;
+  background: var(--accent-soft);
+  color: var(--accent);
   border-radius: 5px;
   transition: ease 0.3s;
+}
+
+/* theme picker styles */
+.themeToggleButton {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.themeToggleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  background: var(--accent-strong);
+}
+
+.themeToggleButton:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.themeModalOverlay {
+  position: fixed;
+  inset: 0;
+  /* might change if i decide i want screen to darken when clicked */
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 1.5rem;
+  padding-bottom: 5rem;
+  z-index: 30;
+}
+
+.themeModal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.1rem 1.2rem 1rem;
+  max-width: 420px;
+  width: min(92vw, 420px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+  transform-origin: bottom right;
+  animation: scaleIn 0.18s ease-out;
+}
+
+.themeModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.themeModalHeader h2 {
+  font-family: "Lexend Exa", sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent-text);
+}
+
+.themeModalClose {
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--bg-gradient-to);
+}
+
+.themeModalSubtitle {
+  font-size: 0.8rem;
+  color: var(--bg-gradient-to);
+  margin-bottom: 0.9rem;
+}
+
+.themePaletteGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.themePaletteTile {
+  border-radius: 12px;
+  border: 1px solid var(--bg-gradient-from);
+  padding: 0.6rem 0.7rem;
+  background: var(--accent-soft);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.12s ease, background 0.16s ease;
+}
+
+.themePaletteTile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(75, 51, 94, 0.18);
+}
+
+.themePaletteTileActive {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  background: #ffffff;
+}
+
+.themePaletteSwatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.25rem;
+}
+
+.themePaletteSwatches span {
+  height: 18px;
+  border-radius: 999px;
+}
+
+.themePaletteName {
+  font-family: "Lexend Exa", sans-serif;
+  font-size: 0.75rem;
+  color: var(--accent-text);
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .welcome {
   font-family: "Lexend Exa", sans-serif;
   font-size: 2.5rem;
-  color: #4b335e;
+  color: var(--accent-text);
   margin-bottom: 0.25rem;
   animation: fadeInUp 0.5s ease-out both;
 }
@@ -80,19 +224,18 @@ nav {
   align-items: center;
   min-height: calc(100vh - 60px);
   padding: 3rem 2rem;
-  background: linear-gradient(135deg, #faf8fc 0%, #f3eef8 100%);
 }
 
 .homeSubtitle {
   font-family: "Lexend Exa", sans-serif;
   font-size: 1rem;
-  color: #9b8aad;
+  color: var(--accent-strong);
   margin-bottom: 2rem;
   animation: fadeInUp 0.5s ease-out 0.05s both;
 }
 
 .homeSubtitle span {
-  color: #4b335e;
+  color: var(--accent-text);
   font-weight: 600;
 }
 
@@ -125,7 +268,7 @@ nav {
 .bentoLabel {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.7rem;
-  color: #9b8aad;
+  color: var(--bg-gradient-to);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.75rem;
@@ -141,7 +284,7 @@ nav {
 .bentoLabelRow a {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.7rem;
-  color: #4b335e;
+  color: var(--accent-text);
   text-decoration: none;
 }
 
@@ -156,7 +299,7 @@ nav {
 
 .upcomingItem {
   flex: 1;
-  background: #f5f0fa;
+  background: var(--accent-soft);
   border-radius: 8px;
   padding: 0.6rem;
   min-width: 0;
@@ -173,7 +316,7 @@ nav {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #4b335e;
+  color: var(--accent-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -182,12 +325,12 @@ nav {
 .upcomingItemDate {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.65rem;
-  color: #9b8aad;
+  color: var(--accent-strong);
   margin-top: 0.2rem;
 }
 
 .progressCard {
-  background: #4b335e;
+  background: var(--accent);
   border: none;
   text-align: center;
   display: flex;
@@ -197,7 +340,7 @@ nav {
 }
 
 .progressCard:hover {
-  background: #5a4070;
+  background: var(--accent-strong);
 }
 
 .progressNumber {
@@ -232,14 +375,14 @@ nav {
 .toolLabel {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.8rem;
-  color: #4b335e;
+  color: var(--accent-text);
   font-weight: 500;
 }
 
 .emptyState {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.85rem;
-  color: #9b8aad;
+  color: var(--bg-gradient-to);
   text-align: center;
   padding: 1rem;
 }
@@ -274,7 +417,7 @@ nav {
 }
 
 button {
-  background: #4b335e;
+  background: var(--accent);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -283,7 +426,7 @@ button {
 }
 
 button:hover {
-  background: #6f5386 !important;
+  background: var(--accent-strong) !important;
   transition: all 0.2s ease !important;
 }
 
@@ -296,6 +439,85 @@ h1 {
   flex-direction: column;
   flex: 1;
   padding-left: 1rem;
+}
+
+.assignmentCardRoot {
+  position: relative;
+}
+
+.assignmentTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.assignmentLeft {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.assignmentTitle {
+  font-size: 1.7rem;
+  color: var(--accent-text);
+  margin: 0 0 0.5rem 0;
+  font-family: "Lexend Exa", sans-serif;
+  font-weight: bold;
+  transition: color 1s ease;
+}
+
+.assignmentTitleCompleted {
+  text-decoration: line-through;
+}
+
+.assignmentSubjectChip {
+  color: #fff;
+  margin: 0;
+  border-radius: 6px;
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 1.1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.assignmentRight {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.assignmentDueDate {
+  color: var(--accent-text);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.assignmentProgressText {
+  color: #666;
+  font-weight: normal;
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.assignmentProgressTextDone {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.assignmentBottomRow {
+  width: 100%;
+}
+
+.assignmentProgressRange {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #blockAndInfo {
@@ -313,7 +535,7 @@ h1 {
 .colorBlock {
   width: 10px;
   min-height: 100%;
-  background-color: #4b335e;
+  background-color: var(--accent);
   border-radius: 5px;
   flex-shrink: 0;
 }
@@ -326,8 +548,10 @@ h1 {
   font-family: 'Lexend Exa', sans-serif !important;
 }
 
-#todopage h1 {
-  color: #4b335e;
+.todoTitle {
+  font-family: "Lexend Exa", sans-serif !important;
+  font-size: 2.3rem;
+  color: var(--accent-text);
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -356,7 +580,7 @@ h1 {
 
 .todo-input-section button {
   padding: 0.75rem 1.5rem;
-  background: #4b335e;
+  background: var(--accent);
   color: white;
   border: none;
   border-radius: 4px;
@@ -365,7 +589,7 @@ h1 {
 }
 
 .todo-input-section button:hover {
-  background: #8e639a;
+  background: var(--bg-gradient-to);
 }
 
 .todo-list {
@@ -406,7 +630,7 @@ h1 {
 
 #todoitem:has(:checked) {
   opacity: 0.7;
-  background: #e8f5e8;
+  background: var(--accent-soft);
 }
 
 #todoitem:has(:checked) p {
@@ -415,7 +639,7 @@ h1 {
 }
 
 input[type="checkbox"] {
-  accent-color: #4b335e;
+  accent-color: var(--accent);
 }
 
 #addtask {
@@ -439,7 +663,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #4b335e; /* circle color, might change*/
+  background: var(--accent); /* circle color, might change*/
   cursor: pointer;
   border: 2px solid white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -447,7 +671,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 #addbutton {
   padding: 0.75rem 1.5rem;
-  background: #4b335e;
+  background: var(--accent);
   color: white;
   border: none;
   border-radius: 4px;
@@ -457,14 +681,14 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #addbutton:hover {
-  background: #6f5386;
+  background: var(--accent-strong);
   transition: all 0.2s ease;
 }
 
 #assignmentsTitle {
   font-family: "Lexend Exa", sans-serif !important;
   font-size: 2.3rem;
-  color: #fff;
+  color: var(--accent-text);
 }
 
 .wrapper {
@@ -480,7 +704,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 2.3rem;
   color: #fff;
   margin-bottom: 1rem;
-  background: #4b335e;
+  background: var(--accent);
   padding: 1rem 2rem;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(111, 83, 134, 0.3);
@@ -491,7 +715,7 @@ input[type="range"]::-webkit-slider-thumb {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #6c5281;
+    background-color: var(--accent-strong);
     width: 60vw;
     height: 60vh;
     margin: 0 auto;
@@ -546,7 +770,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-family: "Lexend Exa", sans-serif !important;
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
-    background-color: #4b335e;
+    background-color: var(--accent);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -556,7 +780,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .wrapper button:hover {
     background-color: #fff;
-    color: #4b335e;
+    color: var(--accent);
 }
 
 .timerButtons {
@@ -568,7 +792,7 @@ input[type="range"]::-webkit-slider-thumb {
 #stats {
     font-family: "Lexend Exa", sans-serif !important;
     font-size: 1.5rem;
-    color: #fff;
+    color: var(--accent-text);
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -580,7 +804,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #showCompleted {
-        background-color: #4b335e;
+        background-color: var(--accent);
         color: white;
         border: none;
         border-radius: 999px;
@@ -592,4 +816,247 @@ input[type="range"]::-webkit-slider-thumb {
         gap: 8px;
         transition: all 0.15s ease;
         font-family: "Lexend Exa", sans-serif;
+}
+
+#lyric {
+  font-family: "Lexend Exa", sans-serif !important;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--accent-text);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  line-height: 1.6;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.settingsPage {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.settingsTitle {
+  color: var(--accent-text);
+  margin-bottom: 1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsCard {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settingsSectionTitle {
+  color: var(--accent-text);
+  margin-bottom: 1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsSubtitle {
+  color: #666;
+  margin-bottom: 2rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsNameRow,
+.settingsAddClassRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.settingsTextInput {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsAddClassSection {
+  margin-bottom: 2rem;
+}
+
+.settingsColorPickerWrapper {
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsPrimaryButton {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsPrimaryButton:hover {
+  background-color: var(--accent-strong);
+}
+
+.settingsClassesHeader {
+  color: var(--accent-text);
+  margin-bottom: 1rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsClassesList {
+  list-style: none;
+  padding: 0;
+}
+
+.settingsClassItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsEditWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.settingsEditRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.settingsEditInput {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsEditButtonsRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.settingsSaveButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsCancelButton {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsClassInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.settingsClassColorSwatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.settingsClassName {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.settingsClassActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.settingsSecondaryButton {
+  background-color: var(--accent-soft);
+  color: var(--accent-text);
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsSecondaryButton:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+.settingsDangerButton {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+.settingsDangerButton:hover {
+  background-color: var(--accent-strong);
+}
+
+.settingsEmptyState {
+  color: #999;
+  text-align: center;
+  padding: 2rem;
+  font-family: "Lexend Exa", sans-serif;
+}
+
+#addAssignment {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#backButton {
+                        background-color: var(--accent);
+                        color: #fff,;
+                        border: none;
+                        padding: 0.5rem 1rem;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-family: Lexend Exa, sans-serif;
 }

@@ -92,19 +92,7 @@ export default function Assignments() {
                     </button>
                     <button
                         onClick={() => setShowForm(!showForm)}
-                        style={{
-                            backgroundColor: "#4b335e",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "50%",
-                            width: "50px",
-                            height: "50px",
-                            fontSize: "24px",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
+                        id="addAssignment"
                     >
                         +
                     </button>

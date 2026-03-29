@@ -144,30 +144,14 @@ export default function AssignmentDetail() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
                 <button 
                     onClick={() => router.push("/assignments")}
-                    style={{
-                        backgroundColor: "#4b335e",
-                        color: "white",
-                        border: "none",
-                        padding: "0.5rem 1rem",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        fontFamily: "Lexend Exa, sans-serif",
-                    }}
+                    id="backButton"
                 >
                     ← back
                 </button>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button
                         onClick={() => setIsEditing(!isEditing)}
-                        style={{
-                            backgroundColor: isEditing ? "#8e639a" : "#4b335e",
-                            color: "white",
-                            border: "none",
-                            padding: "0.5rem 1rem",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            fontFamily: "Lexend Exa, sans-serif",
-                        }}
+                        id="backButton"
                     >
                         {isEditing ? "cancel" : "edit"}
                     </button>

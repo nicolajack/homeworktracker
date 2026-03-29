@@ -70,75 +70,56 @@ export default function Assignment ({ id, title, dueDate, subject, progress = 0,
     return (
         <div 
             onClick={handleCardClick}
+            className="assignmentCardRoot"
             style={{ 
                 opacity: progress === 100 ? 0.7 : 1,
                 cursor: clickable ? "pointer" : "default",
-                position: "relative",
             }}
-            id="assignmentCard"
         >
             <div id="blockAndInfo">
                 <div 
                     className="colorBlock"
-                    style={{ backgroundColor: color }}
-                >
-                </div>
+                    style={{ backgroundColor: assignmentColor }}
+                />
                 <div className="assignmentCard">
                     {/* top row */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
+                    <div className="assignmentTopRow">
                         {/* left side */}
-                        <div style={{ flex: 1, marginRight: "1rem" }}>
-                            <h2 style={{ 
-                                fontSize: "1.7rem", 
-                                color: "#4b335e",
-                                textDecoration: progress === 100 ? "line-through" : "none",
-                                transition: "color 1s ease",
-                                margin: "0 0 0.5rem 0",
-                                fontFamily: "Lexend Exa, sans-serif",
-                                fontWeight: "bold",
-                            }}>
+                        <div className="assignmentLeft">
+                            <h2
+                                className={`assignmentTitle${progress === 100 ? " assignmentTitleCompleted" : ""}`}
+                            >
                                 {title}
                             </h2>
-                            <p style={{ color: "#fff", margin: "0", background: color, borderRadius: "6px", display: "inline-block", padding: "3px 10px", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>
+                            <p
+                                className="assignmentSubjectChip"
+                                style={{ background: assignmentColor }}
+                            >
                                 {subject}
                             </p>
                         </div>
-                        
                         {/* right side */}
-                        <div style={{ textAlign: "right", flexShrink: 0 }}>
-                            <p style={{ color: "#4b335e", margin: "0 0 0.5rem 0", fontSize: "1.3rem", fontWeight: "bold", fontFamily: "Lexend Exa, sans-serif" }}>
+                        <div className="assignmentRight">
+                            <p className="assignmentDueDate">
                                 {formatDueDate(dueDate)}
                             </p>
-                            <p style={{ 
-                                color: progress === 100 ? "#28a745" : "#666",
-                                fontWeight: progress === 100 ? "bold" : "normal",
-                                margin: "0",
-                                fontSize: "1.1rem",
-                                fontFamily: "Lexend Exa, sans-serif",
-                            }}>
+                            <p className={`assignmentProgressText${progress === 100 ? " assignmentProgressTextDone" : ""}`}>
                                 {progress === 100 ? "completed!" : `${progress}%`}
                             </p>
                         </div>
                     </div>
-                    
                     {/* bottom row */}
-                    <div style={{ width: "100%" }}>
+                    <div className="assignmentBottomRow">
                         <input
                             type="range"
                             min="0"
                             max="100"
                             value={progress}
                             onChange={handleProgressChange}
-                            onClick={(e) => e.stopPropagation()} // prevent card click when clicking slider
+                            onClick={(e) => e.stopPropagation()}
+                            className="assignmentProgressRange"
                             style={{
-                                width: "100%",
-                                height: "8px",
-                                borderRadius: "4px",
-                                background: `linear-gradient(to right, ${color} 0%, ${color} ${progress}%, #e0e0e0 ${progress}%, #e0e0e0 100%)`,
-                                outline: "none",
-                                cursor: "pointer",
-                                WebkitAppearance: "none",
-                                appearance: "none"
+                                background: `linear-gradient(to right, ${assignmentColor} 0%, ${assignmentColor} ${progress}%, #e0e0e0 ${progress}%, #e0e0e0 100%)`,
                             }}
                         />
                     </div>
