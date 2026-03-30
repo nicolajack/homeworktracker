@@ -5,10 +5,24 @@ import "./globals.css";
 import { THEME_STORAGE_KEY, findPaletteById, applyPaletteVars } from "./theme";
 
 export const metadata = {
-  title: "study buddy",
-  description: "track your assignments and homework",
+  metadataBase: new URL("https://homeworktracker-eight.vercel.app"),
+  title: {
+    default: "Study Buddy — Homework Tracker & Assignment Planner",
+    template: "%s — Study Buddy",
+  },
+  description:
+    "Track assignments, manage due dates, and stay on top of your homework with Study Buddy. Free student planner with pomodoro timer, calendar, and to-do lists.",
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Study Buddy",
+    locale: "en_US",
+    url: "https://homeworktracker-eight.vercel.app",
+  },
+  twitter: {
+    card: "summary",
   },
 };
 
@@ -34,6 +48,28 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "Study Buddy",
+              "url": "https://homeworktracker-eight.vercel.app",
+              "description":
+                "Track assignments, manage due dates, and stay on top of your homework. Free student planner with pomodoro timer, calendar, and to-do lists.",
+              "applicationCategory": "EducationalApplication",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+              },
+            }),
+          }}
+        />
+      </head>
       <body>
         <AssignmentsProvider>
           <Navbar />
