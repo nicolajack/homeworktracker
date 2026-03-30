@@ -232,13 +232,14 @@ export default function Home() {
         {dueThisWeek > 0 ? (
           <>you have <span>{dueThisWeek} assignment{dueThisWeek !== 1 ? "s" : ""}</span> due this week</>
         ) : (
-          "you're all caught up this week!"
+          "you're all caught up this week! study buddy helps you track assignments, plan your week, and stay focused."
         )}
       </p>
 
+      <h2 className="sr-only">your homework dashboard</h2>
       <div className="bentoGrid">
         {/* Upcoming Assignments */}
-        <div className="bentoCard bentoCardWide" style={staggerDelay(0)}>
+        <section className="bentoCard bentoCardWide" aria-label="Upcoming assignments" style={staggerDelay(0)}>
           <div className="bentoLabelRow">
             <span className="bentoLabel" style={{ marginBottom: 0 }}>Upcoming Assignments</span>
             <Link href="/assignments">view all →</Link>
@@ -257,9 +258,9 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <p className="emptyState">no upcoming assignments</p>
+            <p className="emptyState">no upcoming assignments yet — add your first one to get started tracking homework and due dates</p>
           )}
-        </div>
+        </section>
 
         {/* Progress */}
         <div className="bentoCard progressCard" style={staggerDelay(1)}>
@@ -271,21 +272,24 @@ export default function Home() {
         </div>
 
         {/* Quick Access Tools */}
-        <Link href="/pomodoro" className="bentoCard toolCard" style={staggerDelay(2)}>
+        <Link href="/pomodoro" className="bentoCard toolCard" aria-label="Pomodoro study timer" style={staggerDelay(2)}>
           <div className="toolIcon">
             <ClockIcon />
           </div>
           <div className="toolLabel">pomodoro</div>
+          <div className="toolDescriptor">stay focused with timed study sessions</div>
         </Link>
 
-        <Link href="/calendar" className="bentoCard toolCard" style={staggerDelay(3)}>
+        <Link href="/calendar" className="bentoCard toolCard" aria-label="Assignment calendar" style={staggerDelay(3)}>
           <div className="toolIcon"><CalendarIcon /></div>
           <div className="toolLabel">calendar</div>
+          <div className="toolDescriptor">view assignments by due date</div>
         </Link>
 
-        <Link href="/todo" className="bentoCard toolCard" style={staggerDelay(4)}>
+        <Link href="/todo" className="bentoCard toolCard" aria-label="To-do list" style={staggerDelay(4)}>
           <div className="toolIcon"><TodoIcon /></div>
           <div className="toolLabel">to-do</div>
+          <div className="toolDescriptor">keep track of daily tasks</div>
         </Link>
         {/* bringing back ts lyric */}
         <div className="bentoCard" style={{ ...staggerDelay(5), gridColumn: '1 / -1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '1rem 1.25rem' }}>

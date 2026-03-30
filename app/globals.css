@@ -379,6 +379,14 @@ nav {
   font-weight: 500;
 }
 
+.toolDescriptor {
+  font-family: "Lexend Exa", sans-serif;
+  font-size: 0.6rem;
+  color: var(--bg-gradient-to);
+  font-weight: 400;
+  margin-top: 0.15rem;
+}
+
 .emptyState {
   font-family: "Lexend Exa", sans-serif;
   font-size: 0.85rem;
@@ -1160,4 +1168,16 @@ input[type="range"]::-webkit-slider-thumb {
   color: var(--accent-text);
   text-align: center;
   padding: 1rem 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
