@@ -1181,3 +1181,23 @@ input[type="range"]::-webkit-slider-thumb {
   white-space: nowrap;
   border-width: 0;
 }
+
+#addAssignmentButton {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Lexend Exa, sans-serif;
+}
+
+#cancelButton {
+  background-color: var(--bg-gradient-to);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Lexend Exa, sans-serif;
+}

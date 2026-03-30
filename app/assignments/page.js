@@ -191,15 +191,7 @@ export default function Assignments() {
                     <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
                         <button
                             onClick={handleAddAssignment}
-                            style={{
-                                backgroundColor: "#4b335e",
-                                color: "white",
-                                border: "none",
-                                padding: "0.5rem 1rem",
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                                fontFamily: "Lexend Exa, sans-serif"
-                            }}
+                            id="addAssignmentButton"
                         >
                             add assignment
                         </button>
@@ -208,15 +200,7 @@ export default function Assignments() {
                                 setShowForm(false);
                                 setNewAssignment({ title: "", dueDate: "", subject: "", description: ""});
                             }}
-                            style={{
-                                backgroundColor: "#8e639a",
-                                color: "white",
-                                border: "none",
-                                padding: "0.5rem 1rem",
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                                fontFamily: "Lexend Exa, sans-serif"
-                            }}
+                            id="cancelButton"
                         >
                             cancel
                         </button>
