@@ -28,14 +28,25 @@ const TodoIcon = ({ color = 'var(--accent)', size = 24 }) => (
   </svg>
 );
 
-// to display how many items are due "this week" (in this seven day period)
+// to display how many items are due this week
 function getWeekBounds() {
   const today = new Date();
+  // normalize to start of today
   today.setHours(0, 0, 0, 0);
-  const end = new Date(today);
-  end.setDate(today.getDate() + 6);
+  // getDay(): 0 = Sunday, 1 = Monday, ... 6 = Saturday
+  const dayIndex = today.getDay();
+
+  // start = most recent Sunday (or today if it's Sunday) at 00:00:00
+  const start = new Date(today);
+  start.setDate(today.getDate() - dayIndex);
+  start.setHours(0, 0, 0, 0);
+
+  // end = following Saturday at 23:59:59.999 (start + 6 days)
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
   end.setHours(23, 59, 59, 999);
-  return { start: today, end };
+
+  return { start, end };
 }
 
 function formatDueDate(dateStr) {
