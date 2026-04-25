@@ -234,6 +234,14 @@ nav {
   animation: fadeInUp 0.5s ease-out 0.05s both;
 }
 
+.homeBottom {
+  font-family: "Lexend Exa", sans-serif;
+  font-size: 1.2rem;
+  color: var(--accent-strong);
+  margin-top: 2rem;
+  animation: fadeInUp 0.5s ease-out 0.05s both;
+}
+
 .homeSubtitle span {
   color: var(--accent-text);
   font-weight: 600;

@@ -24,23 +24,46 @@ export const THEME_PALETTES = [
     {
         id: "sunset",
         name: "Sunset",
-        accent: "#c44536",
-        accentSoft: "#ffe8dc",
-        accentStrong: "#922f24",
-        accentText: "#70241b",
-        bgFrom: "#ffe4c4",
-        bgTo: "#ffb3a7",
+        // warmer + less muddy reds; keeps contrast for text/buttons
+        accent: "#B23A48",        // raspberry
+        accentSoft: "#FFF1E6",    // peach cream
+        accentStrong: "#7A1E2D",  // deep berry
+        accentText: "#5E1723",
+        bgFrom: "#FFE2D1",       // soft apricot
+        bgTo: "#F9A8D4",         // rosy pink
     },
     {
         id: "forest",
         name: "Forest",
-        accent: "#22543d",
-        accentSoft: "#e6fffa",
-        accentStrong: "#1a3b2c",
-        accentText: "#163329",
-        bgFrom: "#c6f6d5",
-        bgTo: "#9ae6b4",
+        // greener + cleaner teals; avoids the "mint" look
+        accent: "#1F5E4B",        // deep eucalyptus
+        accentSoft: "#E9FBF4",    // light mist
+        accentStrong: "#164236",  // dark pine
+        accentText: "#0F2F27",
+        bgFrom: "#DFF7EC",       // pale green
+        bgTo: "#A7E3C8",         // fresh jade
     },
+    {
+        id: "mountains",
+        name: "Mountains",
+        // rocky grays + snowy peaks + forest greens
+        accent: "#5A4A42",        // rocky brown
+        accentSoft: "#F0F4F8",    // snowy white
+        accentStrong: "#3D2F28",  // dark stone
+        accentText: "#2C2420",    // charcoal
+        bgFrom: "#D4D0CC",        // stone gray
+        bgTo: "#A8C5A0",          // forest green
+    },
+    {
+        id: "Rocky",
+        name: "Rocky",
+        accent: "#726D6A",        // rocky gray
+        accentSoft: "#EBE3DF",    // soft stone
+        accentStrong: "#4A4644",  // dark stone
+        accentText: "#2F2E2D",    // charcoal
+        bgFrom: "#F8ECE6",        // light stone
+        bgTo: "#D5C4BD",          // deep stone
+    }
 ];
 
 export function findPaletteById(id) {

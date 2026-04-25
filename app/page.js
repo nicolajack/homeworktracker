@@ -72,6 +72,7 @@ export default function Home() {
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [activePaletteId, setActivePaletteId] = useState(THEME_PALETTES[0]?.id || "twilight");
+  const visible = assignments.filter(a => !a.archived);
 
   function fetchTaylorLyric() {
     fetch("https://taylorswiftapi.onrender.com/get")
@@ -243,7 +244,7 @@ export default function Home() {
         {dueThisWeek > 0 ? (
           <>you have <span>{dueThisWeek} assignment{dueThisWeek !== 1 ? "s" : ""}</span> due this week</>
         ) : (
-          "you're all caught up this week! study buddy helps you track assignments, plan your week, and stay focused."
+          "you're all caught up this week! great job!!"
         )}
       </p>
 
@@ -326,6 +327,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <div className="homeBottom"> you have <span className="assignmentCount">{ visible.length }</span> total assignments!</div>
     </div>
   );
 }
