@@ -6,7 +6,7 @@ export default function ToDo() {
     const [tasks, setTasks] = useState([]);
     const [text, setText] = useState("");
 
-    // load takss from localstorage
+    // load tasks from localstorage
     useEffect(() => {
         const savedTasks = localStorage.getItem("todo-tasks");
         if (savedTasks) {
@@ -30,19 +30,27 @@ export default function ToDo() {
 
     // save tasks to local storage whenever they change
     useEffect(() => {
-        localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+        // Prevent overwriting local storage with an empty array on initial mount before load
+        if (tasks.length > 0 || localStorage.getItem("todo-tasks")) {
+            localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+        }
     }, [tasks]);
+
     function addTask(text) {
+        if (!text.trim()) return; // Don't add empty tasks
         const newTask = {
             id: Date.now(),
             text,
-            completed: false};
-            setTasks([...tasks, newTask]);
-            setText("");
+            completed: false
+        };
+        setTasks([...tasks, newTask]);
+        setText("");
     }
+
     function deleteTask(id) {
         setTasks(tasks.filter(task => task.id !== id));
     }
+
     function toggleCompleted(id) {
         setTasks(tasks.map(task => {
             if (task.id === id) {
@@ -52,19 +60,36 @@ export default function ToDo() {
             }
         }));
     }
+
+    function editTask(id, newText) {
+        if (!newText || !newText.trim()) return;
+
+        setTasks(tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, text: newText.trim() };
+            }
+            return task;
+        }));
+    }
+
     return (
         <div id="todopage">
             <h1 className="todoTitle">to-do list</h1>
             <div id="todolist">
                 {tasks.map(task => (
-                    <ToDoItem key={task.id} task={task} deleteTask={deleteTask} toggleCompleted={toggleCompleted} />
+                    <ToDoItem 
+                        key={task.id} 
+                        task={task} 
+                        deleteTask={deleteTask} 
+                        toggleCompleted={toggleCompleted} 
+                        editTask={editTask} // Passed down here
+                    />
                 ))}
                 <div id="addtask">
-                    <input id="tasktext" type="text" placeholder="buy nico a present" value={text} onChange={e => setText(e.target.value)} />
+                    <input id="tasktext" type="text" placeholder="have a good day!" value={text} onChange={e => setText(e.target.value)} />
                     <button onClick={() => addTask(text)} id="addbutton">add task</button>
                 </div>
             </div>
-
         </div>
-    )
+    );
 }
