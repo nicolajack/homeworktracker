@@ -1345,3 +1345,66 @@ input[type="range"]::-webkit-slider-thumb {
 .navAuthBtn:active {
   transform: translateY(0);
 }
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.passwordToggleBtn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  color: #666;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: lowercase;
+}
+
+.passwordChecklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0.5rem 0;
+  font-size: 0.75rem;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #888;
+}
+
+.checkItem.valid {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.checkItem.invalid {
+  color: #d32f2f;
+}
+
+.authDivider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.25rem 0;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.authDivider::before,
+.authDivider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.authDivider span {
+  padding: 0 10px;
+}
