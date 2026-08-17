@@ -50,7 +50,7 @@ export default function LoginPage() {
                 password,
                 options: {
                     // Redirects to /login?verified=true after confirmation link is clicked
-                    emailRedirectTo: `${window.location.origin}/login`,
+                    emailRedirectTo: `${window.location.origin}/login?verified=true`,
                 },
             });
 
