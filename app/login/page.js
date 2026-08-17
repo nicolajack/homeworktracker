@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { supabase } from "@/app/lib/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +49,6 @@ export default function LoginPage() {
                 email,
                 password,
                 options: {
-                    // Redirects to /login?verified=true after confirmation link is clicked
                     emailRedirectTo: `${window.location.origin}/login?verified=true`,
                 },
             });
@@ -118,7 +117,6 @@ export default function LoginPage() {
             <div className="authCard">
                 <h1 className="authTitle">{isSignUp ? "create account" : "sign in"}</h1>
 
-                {/* Banner shown after user clicks email confirmation link */}
                 {verifiedBanner && (
                     <p style={{
                         padding: "0.75rem",
@@ -201,5 +199,13 @@ export default function LoginPage() {
                 </button>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div className="authPage"><div className="authCard">loading...</div></div>}>
+            <LoginForm />
+        </Suspense>
     );
 }
