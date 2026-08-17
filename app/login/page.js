@@ -98,7 +98,7 @@ export default function LoginPage() {
                             we sent a confirmation link to <strong>{email}</strong>. please check your inbox and click the link to activate your account.
                         </p>
                         <p style={{ margin: "1rem 0", lineHeight: "1.5", fontSize: "0.85rem", color: "#D0342C"}}>
-                            don't see an email? check your spam folder!!
+                            don&apos;t see an email? check your spam folder!!
                         </p>
                         <button
                             type="button"
