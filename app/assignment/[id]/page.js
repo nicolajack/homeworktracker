@@ -7,33 +7,17 @@ import { useAssignments } from "../../context/AssignmentsContext";
 export default function AssignmentDetail() {
     const params = useParams();
     const router = useRouter();
-    const { assignments, updateAssignment, deleteAssignment } = useAssignments();
+    const { assignments, updateAssignment, deleteAssignment, classes } = useAssignments();
     
-    const assignmentId = parseInt(params.id);
-    const assignment = assignments.find(a => a.id === assignmentId);
-    
-    // get classes from local storage
-    const [savedClasses, setSavedClasses] = useState([]);
-    
-    useEffect(() => {
-        const classes = localStorage.getItem("homework-classes");
-        if (classes) {
-            try {
-                setSavedClasses(JSON.parse(classes));
-            } catch (error) {
-                console.error("Error loading classes:", error);
-            }
-        }
-    }, []);
+    const assignmentId = params.id;
+    const assignment = assignments.find(a => String(a.id) === String(assignmentId));
 
     const existingSubjects = [...new Set(assignments.map(a => a.subject).filter(Boolean))];
-    const allSubjects = [...new Set([
-        ...savedClasses.map(cls => typeof cls === 'string' ? cls : cls.name), 
-        ...existingSubjects
-    ])];
+    const classNames = classes.map(cls => typeof cls === 'string' ? cls : cls.name);
+    const allSubjects = [...new Set([...classNames, ...existingSubjects])];
 
     const getSubjectColor = (subject) => {
-        const classObj = savedClasses.find(cls => 
+        const classObj = classes.find(cls => 
             (typeof cls === 'string' ? cls : cls.name) === subject
         );
         return classObj && typeof classObj === 'object' ? classObj.color : "#f77968";
@@ -93,6 +77,8 @@ export default function AssignmentDetail() {
         });
     };
 
+    const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
     const formatDueDate = (dateString) => {
         if (!dateString) return "no due date";
         const date = new Date(dateString);
@@ -104,7 +90,7 @@ export default function AssignmentDetail() {
     };
 
     const handleSave = () => {
-        updateAssignment(assignmentId, editData);
+        updateAssignment(assignment.id, editData);
         setIsEditing(false);
     };
 
@@ -112,7 +98,7 @@ export default function AssignmentDetail() {
         const newProgress = parseInt(e.target.value);
         
         if (newProgress === 100) {
-            updateAssignment(assignmentId, { progress: newProgress });
+            updateAssignment(assignment.id, { progress: newProgress });
             
             const now = new Date();
             const dueDateObj = new Date(assignment.dueDate);
@@ -120,39 +106,30 @@ export default function AssignmentDetail() {
             
             if (now > oneDayAfterDue) {
                 setTimeout(() => {
-                    deleteAssignment(assignmentId);
+                    deleteAssignment(assignment.id);
                     router.push("/assignments");
                 }, 500);
             }
-            
         } else {
-            updateAssignment(assignmentId, { progress: newProgress });
+            updateAssignment(assignment.id, { progress: newProgress });
         }
     };
 
     const handleDelete = () => {
         if (confirm("are you sure you want to delete this assignment?")) {
-            deleteAssignment(assignmentId);
+            deleteAssignment(assignment.id);
             router.push("/assignments");
         }
     };
 
-    const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-
     return (
         <div style={{ padding: "2rem", maxWidth: "800px", margin: "0 auto" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
-                <button 
-                    onClick={() => router.push("/assignments")}
-                    id="backButton"
-                >
+                <button onClick={() => router.push("/assignments")} id="backButton">
                     ← back
                 </button>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <button
-                        onClick={() => setIsEditing(!isEditing)}
-                        id="backButton"
-                    >
+                    <button onClick={() => setIsEditing(!isEditing)} id="backButton">
                         {isEditing ? "cancel" : "edit"}
                     </button>
                     <button
@@ -193,7 +170,6 @@ export default function AssignmentDetail() {
                         </div>
                         
                         <div style={{ display: "flex", gap: "1rem" }}>
-                            
                             <div style={{ flex: 1 }}>
                                 <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>subject</label>
                                 <select
@@ -203,7 +179,7 @@ export default function AssignmentDetail() {
                                     style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", fontFamily: "Lexend Exa, sans-serif" }}
                                 >
                                     <option value="">select a subject</option>
-                                    {savedClasses.map(cls => {
+                                    {classes.map(cls => {
                                         const className = typeof cls === 'string' ? cls : cls.name;
                                         return (
                                             <option key={className} value={className}>
@@ -231,10 +207,7 @@ export default function AssignmentDetail() {
                                     }}
                                 />
                             </div>
-                            
                         </div>
-
-                        
 
                         <div>
                             <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold", fontSize: "1.1rem", fontFamily: "Lexend Exa, sans-serif" }}>description</label>
@@ -306,13 +279,13 @@ export default function AssignmentDetail() {
                                     type="range"
                                     min="0"
                                     max="100"
-                                    value={assignment.progress}
+                                    value={assignment.progress || 0}
                                     onChange={handleProgressChange}
                                     style={{
                                         width: "100%",
                                         height: "8px",
                                         borderRadius: "4px",
-                                        background: `linear-gradient(to right, ${assignment.color} 0%, ${assignment.color} ${assignment.progress}%, #e0e0e0 ${assignment.progress}%, #e0e0e0 100%)`,
+                                        background: `linear-gradient(to right, ${assignment.color} 0%, ${assignment.color} ${assignment.progress || 0}%, #e0e0e0 ${assignment.progress || 0}%, #e0e0e0 100%)`,
                                         outline: "none",
                                         cursor: "pointer",
                                         WebkitAppearance: "none",

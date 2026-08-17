@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import ColorPicker from "../components/ColorPicker";
+import { useAssignments } from "@/app/context/AssignmentsContext";
+import { supabase } from "@/app/lib/supabase";
 
 export default function Settings() {
     const [classes, setClasses] = useState([]);
@@ -10,69 +12,100 @@ export default function Settings() {
     const [isEditing, setIsEditing] = useState(null);
     const [editValue, setEditValue] = useState("");
     const [editColor, setEditColor] = useState("");
-    const [hasLoaded, setHasLoaded] = useState(false);
     const [name, setName] = useState("you");
+    const [hasLoaded, setHasLoaded] = useState(false);
 
-    // load classes from localStorage
+    const { user } = useAssignments();
+
+    // Sync state with DB or LocalStorage
     useEffect(() => {
-        const savedClasses = localStorage.getItem("homework-classes");
-        if (savedClasses) {
-            try {
-                const parsedClasses = JSON.parse(savedClasses);
-                const migratedClasses = parsedClasses.map(cls => {
-                    if (typeof cls === 'string') {
-                        return {
-                            name: cls,
-                            color: "#f77968"
-                        };
+        const loadSettings = async () => {
+            if (user) {
+                // Check local storage to migrate initial data
+                const localClasses = localStorage.getItem("homework-classes");
+                const localName = localStorage.getItem("homework-name");
+
+                const { data } = await supabase.from("user_settings").select("*").eq("user_id", user.id).single();
+
+                let initialClasses = data?.classes ?? [];
+                let initialName = data?.name ?? "you";
+
+                if (localClasses || localName) {
+                    if (localClasses && initialClasses.length === 0) {
+                        try { initialClasses = JSON.parse(localClasses); } catch (e) {}
                     }
-                    return cls;
-                });
-                
-                setClasses(migratedClasses);
-            } catch (error) {
-                console.error("Error loading classes:", error);
+                    if (localName && initialName === "you") {
+                        initialName = localName;
+                    }
+                    // Upsert into Supabase & clear localStorage
+                    await supabase.from("user_settings").upsert({
+                        user_id: user.id,
+                        name: initialName,
+                        classes: initialClasses
+                    });
+                    localStorage.removeItem("homework-classes");
+                    localStorage.removeItem("homework-name");
+                }
+
+                setClasses(initialClasses);
+                setName(initialName);
+            } else {
+                const savedClasses = localStorage.getItem("homework-classes");
+                if (savedClasses) {
+                    try {
+                        const parsedClasses = JSON.parse(savedClasses);
+                        setClasses(parsedClasses.map(cls => typeof cls === 'string' ? { name: cls, color: "#f77968" } : cls));
+                    } catch (error) {
+                        console.error("Error loading classes:", error);
+                    }
+                }
+                const savedName = localStorage.getItem("homework-name");
+                if (savedName) setName(savedName);
             }
-        }
-        setHasLoaded(true);
-    }, []);
+            setHasLoaded(true);
+        };
 
-    // load saved name from localStorage
-    useEffect(() => {
-        const savedName = localStorage.getItem("homework-name");
-        if (savedName) {
-            setName(savedName);
-        }
-    }, []);
+        loadSettings();
+    }, [user]);
 
-    // persist name to localStorage when it changes
-    useEffect(() => {
-        if (name !== undefined) {
-            localStorage.setItem("homework-name", name);
+    // Save helpers
+    const saveSettingsToDB = async (updatedName, updatedClasses) => {
+        if (user) {
+            await supabase.from("user_settings").upsert({
+                user_id: user.id,
+                name: updatedName,
+                classes: updatedClasses
+            });
         }
-    }, [name]);
+    };
 
-    // save classes to localStorage whenever classes change (but only after initial load)
-    useEffect(() => {
-        if (hasLoaded) {
-            localStorage.setItem("homework-classes", JSON.stringify(classes));
+    const handleNameChange = (newName) => {
+        setName(newName);
+        if (!user) localStorage.setItem("homework-name", newName);
+        else saveSettingsToDB(newName, classes);
+    };
+
+    const updateClasses = (newClasses) => {
+        setClasses(newClasses);
+        if (!user && hasLoaded) {
+            localStorage.setItem("homework-classes", JSON.stringify(newClasses));
+        } else if (user) {
+            saveSettingsToDB(name, newClasses);
         }
-    }, [classes, hasLoaded]);
+    };
 
     const handleAddClass = () => {
         if (newClass.trim() && !classes.some(cls => cls.name === newClass.trim())) {
-            const newClassObj = {
-                name: newClass.trim(),
-                color: newClassColor
-            };
-            setClasses([...classes, newClassObj]);
+            const updated = [...classes, { name: newClass.trim(), color: newClassColor }];
+            updateClasses(updated);
             setNewClass("");
             setNewClassColor("#f77968");
         }
     };
 
     const handleDeleteClass = (classToDelete) => {
-        setClasses(classes.filter(cls => cls.name !== classToDelete.name));
+        const updated = classes.filter(cls => cls.name !== classToDelete.name);
+        updateClasses(updated);
     };
 
     const handleEditClass = (index, classObj) => {
@@ -83,12 +116,9 @@ export default function Settings() {
 
     const handleSaveEdit = (index) => {
         if (editValue.trim() && !classes.some((cls, i) => i !== index && cls.name === editValue.trim())) {
-            const updatedClasses = [...classes];
-            updatedClasses[index] = {
-                name: editValue.trim(),
-                color: editColor
-            };
-            setClasses(updatedClasses);
+            const updated = [...classes];
+            updated[index] = { name: editValue.trim(), color: editColor };
+            updateClasses(updated);
         }
         setIsEditing(null);
         setEditValue("");
@@ -102,9 +132,7 @@ export default function Settings() {
     };
 
     const handleKeyPress = (e, action, ...params) => {
-        if (e.key === 'Enter') {
-            action(...params);
-        }
+        if (e.key === 'Enter') action(...params);
     };
 
     return (
@@ -117,7 +145,7 @@ export default function Settings() {
                     <input
                         type="text"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => handleNameChange(e.target.value)}
                         placeholder="ethel cain"
                         className="settingsTextInput"
                     />
@@ -128,7 +156,6 @@ export default function Settings() {
                     add your classes here to use them for your assignments
                 </p>
 
-                {/* add new class */}
                 <div className="settingsAddClassSection">
                     <div className="settingsAddClassRow">
                         <input
@@ -139,10 +166,7 @@ export default function Settings() {
                             placeholder="biology, math, etc."
                             className="settingsTextInput"
                         />
-                        <button
-                            onClick={handleAddClass}
-                            className="settingsPrimaryButton"
-                        >
+                        <button onClick={handleAddClass} className="settingsPrimaryButton">
                             add class
                         </button>
                     </div>
@@ -155,7 +179,6 @@ export default function Settings() {
                     </div>
                 </div>
 
-                {/* classes list */}
                 {classes.length > 0 ? (
                     <div>
                         <h3 className="settingsClassesHeader">ur classes:</h3>
@@ -182,16 +205,10 @@ export default function Settings() {
                                                 />
                                             </div>
                                             <div className="settingsEditButtonsRow">
-                                                <button
-                                                    onClick={() => handleSaveEdit(index)}
-                                                    className="settingsSaveButton"
-                                                >
+                                                <button onClick={() => handleSaveEdit(index)} className="settingsSaveButton">
                                                     save
                                                 </button>
-                                                <button
-                                                    onClick={handleCancelEdit}
-                                                    className="settingsCancelButton"
-                                                >
+                                                <button onClick={handleCancelEdit} className="settingsCancelButton">
                                                     cancel
                                                 </button>
                                             </div>
@@ -199,23 +216,14 @@ export default function Settings() {
                                     ) : (
                                         <>
                                             <div className="settingsClassInfo">
-                                                <div
-                                                    className="settingsClassColorSwatch"
-                                                    style={{ backgroundColor: cls.color }}
-                                                />
+                                                <div className="settingsClassColorSwatch" style={{ backgroundColor: cls.color }} />
                                                 <span className="settingsClassName">{cls.name}</span>
                                             </div>
                                             <div className="settingsClassActions">
-                                                <button
-                                                    onClick={() => handleEditClass(index, cls)}
-                                                    className="settingsSecondaryButton"
-                                                >
+                                                <button onClick={() => handleEditClass(index, cls)} className="settingsSecondaryButton">
                                                     edit
                                                 </button>
-                                                <button
-                                                    onClick={() => handleDeleteClass(cls)}
-                                                    className="settingsDangerButton"
-                                                >
+                                                <button onClick={() => handleDeleteClass(cls)} className="settingsDangerButton">
                                                     delete
                                                 </button>
                                             </div>

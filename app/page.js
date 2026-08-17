@@ -2,7 +2,7 @@
 import { useAssignments } from "./context/AssignmentsContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { THEME_PALETTES, THEME_STORAGE_KEY, findPaletteById, applyPaletteVars } from "./theme";
+import { THEME_PALETTES } from "./theme";
 import { useForm } from '@formspree/react';
 
 
@@ -66,12 +66,10 @@ function formatDueDate(dateStr) {
 }
 
 export default function Home() {
-  const { assignments } = useAssignments();
-  const [name, setName] = useState("you");
+  const { assignments, theme, changeTheme, name } = useAssignments();
   const [taylorLyric, setTaylorLyric] = useState("in the cracks of light, i dreamed of you");
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const [activePaletteId, setActivePaletteId] = useState(THEME_PALETTES[0]?.id || "twilight");
   const visible = assignments.filter(a => !a.archived);
 
   function fetchTaylorLyric() {
@@ -87,22 +85,9 @@ export default function Home() {
       });
   }
 
-  // load name & saved theme on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("homework-name");
-    if (saved) setName(saved);
-
-    const savedThemeId = localStorage.getItem(THEME_STORAGE_KEY);
-    if (savedThemeId) {
-      const palette = findPaletteById(savedThemeId);
-      if (palette) {
-        setActivePaletteId(savedThemeId);
-        applyPaletteVars(palette);
-      }
-    } else if (THEME_PALETTES[0]) {
-      applyPaletteVars(THEME_PALETTES[0]);
-    }
-  }, []);
+  const handlePaletteSelect = (id) => {
+    changeTheme(id);
+  };
 
   const { start, end } = getWeekBounds();
 
@@ -124,18 +109,6 @@ export default function Home() {
     .slice(0, 3);
 
   const staggerDelay = (i) => ({ animationDelay: `${0.1 + i * 0.05}s` });
-
-  const handlePaletteSelect = (id) => {
-    const palette = findPaletteById(id);
-    if (!palette) return;
-    setActivePaletteId(id);
-    applyPaletteVars(palette);
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, id);
-    } catch (e) {
-      console.error("Failed to save theme", e);
-    }
-  };
 
   const [formState, handleFeedbackSubmit] = useForm("xaqlegoo");
 
@@ -222,7 +195,7 @@ export default function Home() {
                 <button
                   key={palette.id}
                   type="button"
-                  className={`themePaletteTile${palette.id === activePaletteId ? " themePaletteTileActive" : ""}`}
+                  className={`themePaletteTile${palette.id === theme ? " themePaletteTileActive" : ""}`}
                   onClick={() => handlePaletteSelect(palette.id)}
                 >
                   <div className="themePaletteSwatches">

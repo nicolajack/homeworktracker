@@ -1,34 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Assignment from "../components/assignment";
 import { useAssignments } from "../context/AssignmentsContext";
 
 export default function Assignments() {
-    const { assignments, addAssignment } = useAssignments();
-    
-    // get classes from local storage
-    const [savedClasses, setSavedClasses] = useState([]);
+    const { assignments, addAssignment, classes } = useAssignments();
 
-    // to get which assignments have been archived
+    // To get which assignments have been archived
     const visible = assignments.filter(a => !a.archived);
-    
-    useEffect(() => {
-        const classes = localStorage.getItem("homework-classes");
-        if (classes) {
-            try {
-                setSavedClasses(JSON.parse(classes));
-            } catch (error) {
-                console.error("Error loading classes:", error);
-            }
-        }
-    }, []);
 
     const existingSubjects = [...new Set(assignments.map(a => a.subject).filter(Boolean))];
-    const allSubjects = [...new Set([
-        ...savedClasses.map(cls => typeof cls === 'string' ? cls : cls.name), 
-        ...existingSubjects
-    ])];
+    const classNames = classes.map(cls => typeof cls === 'string' ? cls : cls.name);
+    const allSubjects = [...new Set([...classNames, ...existingSubjects])];
     
     const [showForm, setShowForm] = useState(false);
     const [newAssignment, setNewAssignment] = useState({
@@ -43,7 +27,7 @@ export default function Assignments() {
     const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
     const getSubjectColor = (subject) => {
-        const classObj = savedClasses.find(cls => 
+        const classObj = classes.find(cls => 
             (typeof cls === 'string' ? cls : cls.name) === subject
         );
         return classObj && typeof classObj === 'object' ? classObj.color : "#f77968";
@@ -66,17 +50,6 @@ export default function Assignments() {
         setNewAssignment(prev => ({ ...prev, [name]: value }));
     };
 
-    const formatDueDate = (dateString) => {
-        if (!dateString) return "no due date";
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) return dateString;
-        
-        const month = monthNames[date.getMonth()];
-        const day = date.getDate();
-        return `${month} ${day}`;
-    };
-
-    // determine which assignments to show in the list
     const listToShow = showCompleted ? assignments : visible;
 
     return (
@@ -136,7 +109,6 @@ export default function Assignments() {
                                     height: "40px"
                                 }}
                             >
-                                
                                 <option value="">select subject</option>
                                 {allSubjects.length > 0 ? (
                                     allSubjects.map((subject) => (
@@ -167,8 +139,6 @@ export default function Assignments() {
                         </div>
                     </div>
                     
-                    
-                    {/* second row - description */}
                     <div style={{ marginTop: "1rem" }}>
                         <p style={{ marginBottom: "0.5rem", fontFamily: "Lexend Exa, sans-serif", fontWeight: "bold" }}>description:</p>
                         <textarea
@@ -213,7 +183,6 @@ export default function Assignments() {
                     .sort((a, b) => {
                         if (!a.dueDate && !b.dueDate) return 0;
                         if (!b.dueDate) return -1;
-                        // closest due date first
                         return new Date(a.dueDate) - new Date(b.dueDate);
                     })
                     .map((assignment) => (
