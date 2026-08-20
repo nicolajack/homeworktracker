@@ -211,7 +211,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       <h1 className="welcome">hello, {name}!</h1>
       <p className="homeSubtitle">
         {dueThisWeek > 0 ? (

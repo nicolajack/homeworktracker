@@ -3,6 +3,7 @@ import { AssignmentsProvider } from "./context/AssignmentsContext.js";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { THEME_STORAGE_KEY, findPaletteById, applyPaletteVars } from "./theme";
+import AnnouncementBanner from "./components/AnnouncementBanner.js";
 
 export const metadata = {
   metadataBase: new URL("https://homeworktracker-eight.vercel.app"),
@@ -73,6 +74,7 @@ export default function RootLayout({ children }) {
       <body>
         <AssignmentsProvider>
           <Navbar />
+          <AnnouncementBanner/>
           <main style={{ minHeight: "calc(100vh - 80px)" }}>{children}</main>
         </AssignmentsProvider>
         <Analytics />
